@@ -54,7 +54,6 @@ namespace SwissTransport
                 {
                     return JsonConvert.DeserializeObject<Connections>(reader.ReadToEnd());
                 }
-
             }
 
             return null;
