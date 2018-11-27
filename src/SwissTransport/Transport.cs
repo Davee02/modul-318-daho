@@ -14,10 +14,11 @@ namespace SwissTransport
 
             if (responseStream != null)
             {
-                var message = new StreamReader(responseStream).ReadToEnd();
-                var stations = JsonConvert.DeserializeObject<Stations>(message
-                    , new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-                return stations;
+                using (var reader = new StreamReader(responseStream))
+                {
+                    return JsonConvert.DeserializeObject<Stations>(reader.ReadToEnd(),
+                        new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+                }
             }
 
             return null;
@@ -25,33 +26,35 @@ namespace SwissTransport
 
         public StationBoardRoot GetStationBoard(string station, string id)
         {
-            var request = CreateWebRequest("http://transport.opendata.ch/v1/stationboard?Station=" + station + "&id=" + id);
+            var request = CreateWebRequest($"http://transport.opendata.ch/v1/stationboard?station={station}&id={id}");
             var response = request.GetResponse();
             var responseStream = response.GetResponseStream();
 
             if (responseStream != null)
             {
-                var readToEnd = new StreamReader(responseStream).ReadToEnd();
-                var stationboard =
-                    JsonConvert.DeserializeObject<StationBoardRoot>(readToEnd);
-                return stationboard;
+                using (var stream = new StreamReader(responseStream))
+                {
+                    return JsonConvert.DeserializeObject<StationBoardRoot>(stream.ReadToEnd());
+                }
             }
 
             return null;
         }
 
-        public Connections GetConnections(string fromStation, string toStattion)
+        public Connections GetConnections(string fromStation, string toStation)
         {
-            var request = CreateWebRequest("http://transport.opendata.ch/v1/connections?from=" + fromStation + "&to=" + toStattion);
+            var request =
+                CreateWebRequest($"http://transport.opendata.ch/v1/connections?from={fromStation}&to={toStation}");
             var response = request.GetResponse();
             var responseStream = response.GetResponseStream();
 
             if (responseStream != null)
             {
-                var readToEnd = new StreamReader(responseStream).ReadToEnd();
-                var connections =
-                    JsonConvert.DeserializeObject<Connections>(readToEnd);
-                return connections;
+                using (var reader = new StreamReader(responseStream))
+                {
+                    return JsonConvert.DeserializeObject<Connections>(reader.ReadToEnd());
+                }
+
             }
 
             return null;
@@ -64,7 +67,7 @@ namespace SwissTransport
 
             webProxy.Credentials = CredentialCache.DefaultNetworkCredentials;
             request.Proxy = webProxy;
-            
+
             return request;
         }
     }
