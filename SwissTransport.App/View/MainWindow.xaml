@@ -45,9 +45,10 @@
                                       Text="{Binding StartSearchText, UpdateSourceTrigger=PropertyChanged}"
                                       IsEditable="True"
                                       IsTextSearchEnabled="False"
-                                      IsSynchronizedWithCurrentItem="False"/>
+                                      IsSynchronizedWithCurrentItem="False"
+                                      Style="{StaticResource AutoExpandComboBox}"/>
 
-                            <Label Grid.Row="1"
+                                <Label Grid.Row="1"
                                    Grid.Column="0"
                                    Content="_Endstation"/>
                             <ComboBox Grid.Row="1"
@@ -56,7 +57,8 @@
                                       ItemsSource="{Binding StopStations}"
                                       Text="{Binding StopSearchText, UpdateSourceTrigger=PropertyChanged}"
                                       IsEditable="True"
-                                      IsTextSearchEnabled="False"/>
+                                      IsTextSearchEnabled="False"
+                                      Style="{StaticResource AutoExpandComboBox}"/>
 
                             <Label Grid.Row="2"
                                    Grid.Column="0"
@@ -71,7 +73,7 @@
 
                     <GroupBox Header="Verbindungen"
                               Margin="0,20,0,0">
-                        <ListView ItemsSource="{Binding Connenctions}"
+                        <ListView ItemsSource="{Binding Connections}"
                                   IsSynchronizedWithCurrentItem="True">
                             <ListView.View>
                                 <GridView>
@@ -115,7 +117,6 @@
 
                 <StackPanel Orientation="Vertical"
                             Margin="5">
-
                     <GroupBox Header="Eingaben">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -133,7 +134,13 @@
                                    Content="_Station"/>
                             <ComboBox Grid.Row="0"
                                       Grid.Column="2"
-                                      SelectedItem="{Binding SelectedStation}"/>
+                                      SelectedItem="{Binding SelectedStation}"
+                                      ItemsSource="{Binding Stations}"
+                                      Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                                      IsEditable="True"
+                                      IsTextSearchEnabled="False"
+                                      IsSynchronizedWithCurrentItem="False"
+                                      Style="{StaticResource AutoExpandComboBox}"/>
 
                             <Label Grid.Row="1"
                                    Grid.Column="0"
@@ -146,14 +153,15 @@
 
                     <GroupBox Header="Abfahrten"
                               Margin="0,20,0,0">
-                        <ListView>
+                        <ListView ItemsSource="{Binding StationBoards}"
+                                  IsSynchronizedWithCurrentItem="True">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Header="Linie"/>
+                                    <GridViewColumn Header="Reiseziel"/>
+                                    <GridViewColumn Header="Linie"
+                                                    DisplayMemberBinding="{Binding}"/>
                                     <GridViewColumn Header="Gleis / Kante"/>
                                     <GridViewColumn Header="Abfahrtszeit"/>
-                                    <GridViewColumn Header="Ankunft"/>
-                                    <GridViewColumn Header="Reisedauer"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
