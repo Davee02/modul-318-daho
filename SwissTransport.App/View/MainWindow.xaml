@@ -40,14 +40,22 @@
                                    Content="_Startstation"/>
                             <ComboBox Grid.Row="0"
                                       Grid.Column="2"
-                                      SelectedItem="{Binding StartStation}"/>
+                                      SelectedItem="{Binding StartStation}"
+                                      ItemsSource="{Binding StartStations}"
+                                      Text="{Binding StartSearchText, UpdateSourceTrigger=PropertyChanged}"
+                                      IsEditable="True"
+                                      IsTextSearchEnabled="False"/>
 
                             <Label Grid.Row="1"
                                    Grid.Column="0"
                                    Content="_Endstation"/>
                             <ComboBox Grid.Row="1"
                                       Grid.Column="2"
-                                      SelectedItem="{Binding StartStation}"/>
+                                      SelectedItem="{Binding StopStation}"
+                                      ItemsSource="{Binding StopStations}"
+                                      Text="{Binding StopSearchText, UpdateSourceTrigger=PropertyChanged}"
+                                      IsEditable="True"
+                                      IsTextSearchEnabled="False"/>
 
                             <Label Grid.Row="2"
                                    Grid.Column="0"
@@ -55,7 +63,8 @@
                             <tools:DateTimePicker Grid.Row="2"
                                                   Grid.Column="2"
                                                   Grid.ColumnSpan="2"
-                                                  Value="{Binding SelectedDateTime}"/>
+                                                  Value="{Binding SelectedDateTime}"
+                                                  TextAlignment="Left"/>
                         </Grid>
                     </GroupBox>
 
@@ -64,7 +73,8 @@
                         <ListView>
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Header="Linie"/>
+                                    <GridViewColumn Header="Linie"
+                                                    />
                                     <GridViewColumn Header="Abfahrt"/>
                                     <GridViewColumn Header="Ankunft"/>
                                     <GridViewColumn Header="Reisedauer"/>

@@ -90,6 +90,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helper\Helper.cs" />
     <Compile Include="ViewModel\ConnectionFinderViewModel.cs" />
     <Compile Include="ViewModel\DepartureScheduleViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
