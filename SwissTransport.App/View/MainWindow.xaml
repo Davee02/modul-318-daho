@@ -44,7 +44,8 @@
                                       ItemsSource="{Binding StartStations}"
                                       Text="{Binding StartSearchText, UpdateSourceTrigger=PropertyChanged}"
                                       IsEditable="True"
-                                      IsTextSearchEnabled="False"/>
+                                      IsTextSearchEnabled="False"
+                                      IsSynchronizedWithCurrentItem="False"/>
 
                             <Label Grid.Row="1"
                                    Grid.Column="0"
@@ -70,14 +71,36 @@
 
                     <GroupBox Header="Verbindungen"
                               Margin="0,20,0,0">
-                        <ListView>
+                        <ListView ItemsSource="{Binding Connenctions}"
+                                  IsSynchronizedWithCurrentItem="True">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Header="Linie"
-                                                    />
-                                    <GridViewColumn Header="Abfahrt"/>
-                                    <GridViewColumn Header="Ankunft"/>
-                                    <GridViewColumn Header="Reisedauer"/>
+                                    <GridViewColumn Header="Abfahrt">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock>
+                                                    <Run Text="{Binding Path=From.Station.Name}"/>
+                                                    <Run Text=" - " />
+                                                    <Run Text="{Binding Path=From.Departure, StringFormat=g}"/>
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Gleis - Kante"
+                                                    DisplayMemberBinding="{Binding From.Platform}"/>
+                                    <GridViewColumn Header="Ankunft">
+                                        <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock>
+                                                <Run Text="{Binding Path=To.Station.Name}"/>
+                                                <Run Text=" - " />
+                                                <Run Text="{Binding Path=To.Arrival, StringFormat=g}"/>
+                                                </TextBlock>
+                                        </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Reisedauer"
+                                                    DisplayMemberBinding="{Binding Duration}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>

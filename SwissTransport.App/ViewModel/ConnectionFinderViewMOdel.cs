@@ -1,23 +1,49 @@
-﻿using System;
+﻿using SwissTransport.App.Helper;
+using System;
 using System.Collections.ObjectModel;
-using SwissTransport.App.Helper;
 
 namespace SwissTransport.App.ViewModel
 {
     public class ConnectionFinderViewModel : ViewModelBase
     {
-        private readonly Transport m_transport = new Transport();
+        private readonly ITransport m_transport;
 
         private ObservableCollection<Station> m_startStations = new ObservableCollection<Station>();
         private ObservableCollection<Station> m_stopStations = new ObservableCollection<Station>();
         private string m_startSearchText;
         private string m_stopSearchText;
+        private Station m_startStation = new Station();
+        private Station m_stopStation = new Station();
+        private ObservableCollection<Connection> m_connections = new ObservableCollection<Connection>();
 
 
         public DateTime SelectedDateTime { get; set; } = DateTime.Now;
-        public Station StartStation { get; set; } = new Station();
-        public Station StopStation { get; set; } = new Station();
 
+        public Station StartStation
+        {
+            get => m_startStation;
+            set
+            {
+                m_startStation = value; 
+                UpdateConnection();
+            }
+        }
+
+        public Station StopStation
+        {
+            get => m_stopStation;
+            set
+            {
+                m_stopStation = value;
+                UpdateConnection();
+            }
+        }
+
+        public ObservableCollection<Connection> Connenctions
+        {
+            get => m_connections;
+            set => SetProperty(ref m_connections, value);
+        }
         public ObservableCollection<Station> StartStations
         {
             get => m_startStations;
@@ -37,6 +63,7 @@ namespace SwissTransport.App.ViewModel
             {
                 if (!string.Equals(value, m_startSearchText))
                 {
+
                     StartStations = m_transport.GetStations(value).StationList.ToObservableCollection();
                     SetProperty(ref m_startSearchText, value);
                 }
@@ -58,9 +85,17 @@ namespace SwissTransport.App.ViewModel
 
         public ConnectionFinderViewModel()
         {
-
+            m_transport = new Transport();
         }
 
+        private void UpdateConnection()
+        {
+            if (StartStation?.Id != null && StopStation?.Id != null)
+            {
+                var allConnections = m_transport.GetConnections(StartStation.Id, StopStation.Id, 16, SelectedDateTime);
+                Connenctions = allConnections.ConnectionList.ToObservableCollection();
+            }
+        }
 
     }
 }
