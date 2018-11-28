@@ -92,7 +92,7 @@
     </Compile>
     <Compile Include="Helper\Helper.cs" />
     <Compile Include="ViewModel\ConnectionFinderViewModel.cs" />
-    <Compile Include="ViewModel\DepartureScheduleViewModel.cs" />
+    <Compile Include="ViewModel\StationBoardViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />

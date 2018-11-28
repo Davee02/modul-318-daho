@@ -15,9 +15,18 @@ namespace SwissTransport.App.ViewModel
         private Station m_startStation = new Station();
         private Station m_stopStation = new Station();
         private ObservableCollection<Connection> m_connections = new ObservableCollection<Connection>();
+        private DateTime m_selectedDateTime = DateTime.Now;
 
 
-        public DateTime SelectedDateTime { get; set; } = DateTime.Now;
+        public DateTime SelectedDateTime
+        {
+            get => m_selectedDateTime;
+            set
+            {
+                SetProperty(ref m_selectedDateTime, value);
+                UpdateConnections();
+            }
+        }
 
         public Station StartStation
         {
@@ -25,7 +34,7 @@ namespace SwissTransport.App.ViewModel
             set
             {
                 m_startStation = value; 
-                UpdateConnection();
+                UpdateConnections();
             }
         }
 
@@ -35,15 +44,16 @@ namespace SwissTransport.App.ViewModel
             set
             {
                 m_stopStation = value;
-                UpdateConnection();
+                UpdateConnections();
             }
         }
 
-        public ObservableCollection<Connection> Connenctions
+        public ObservableCollection<Connection> Connections
         {
             get => m_connections;
             set => SetProperty(ref m_connections, value);
         }
+
         public ObservableCollection<Station> StartStations
         {
             get => m_startStations;
@@ -88,12 +98,12 @@ namespace SwissTransport.App.ViewModel
             m_transport = new Transport();
         }
 
-        private void UpdateConnection()
+        private void UpdateConnections()
         {
             if (StartStation?.Id != null && StopStation?.Id != null)
             {
                 var allConnections = m_transport.GetConnections(StartStation.Id, StopStation.Id, 16, SelectedDateTime);
-                Connenctions = allConnections.ConnectionList.ToObservableCollection();
+                Connections = allConnections.ConnectionList.ToObservableCollection();
             }
         }
 
