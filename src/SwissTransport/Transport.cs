@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace SwissTransport
@@ -8,66 +10,51 @@ namespace SwissTransport
     {
         public Stations GetStations(string query)
         {
-            var request = CreateWebRequest("http://transport.opendata.ch/v1/locations?query=" + query);
-            var response = request.GetResponse();
-            var responseStream = response.GetResponseStream();
+            var request = CreateWebRequest("http://transport.opendata.ch/v1/locations?type=station&query=" + query);
 
-            if (responseStream != null)
-            {
-                using (var reader = new StreamReader(responseStream))
-                {
-                    return JsonConvert.DeserializeObject<Stations>(reader.ReadToEnd(),
-                        new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-                }
-            }
 
-            return null;
+            return JsonConvert.DeserializeObject<Stations>(Get(request),
+                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
         }
 
         public StationBoardRoot GetStationBoard(string station, string id)
         {
             var request = CreateWebRequest($"http://transport.opendata.ch/v1/stationboard?station={station}&id={id}");
-            var response = request.GetResponse();
-            var responseStream = response.GetResponseStream();
 
-            if (responseStream != null)
-            {
-                using (var stream = new StreamReader(responseStream))
-                {
-                    return JsonConvert.DeserializeObject<StationBoardRoot>(stream.ReadToEnd());
-                }
-            }
-
-            return null;
+            return JsonConvert.DeserializeObject<StationBoardRoot>(Get(request));
         }
 
-        public Connections GetConnections(string fromStation, string toStation)
+        public Connections GetConnections(string fromStation, string toStation, int connectionsCount, DateTime departureDateTime)
         {
             var request =
-                CreateWebRequest($"http://transport.opendata.ch/v1/connections?from={fromStation}&to={toStation}");
-            var response = request.GetResponse();
-            var responseStream = response.GetResponseStream();
+                CreateWebRequest(
+                    $"http://transport.opendata.ch/v1/connections?from={fromStation}&to={toStation}&limit={connectionsCount}&date={departureDateTime:yyyy-MM-dd}&time={departureDateTime:hh:mm}");
 
-            if (responseStream != null)
-            {
-                using (var reader = new StreamReader(responseStream))
-                {
-                    return JsonConvert.DeserializeObject<Connections>(reader.ReadToEnd());
-                }
-            }
-
-            return null;
+            return JsonConvert.DeserializeObject<Connections>(Get(request),
+                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
         }
 
         private static WebRequest CreateWebRequest(string url)
         {
-            var request = WebRequest.Create(url);
+            var request = (HttpWebRequest)WebRequest.Create(url);
             var webProxy = WebRequest.DefaultWebProxy;
 
             webProxy.Credentials = CredentialCache.DefaultNetworkCredentials;
             request.Proxy = webProxy;
 
             return request;
+        }
+
+        public string Get(WebRequest webRequest)
+        {
+            var request = (HttpWebRequest)webRequest;
+
+            using (var response = (HttpWebResponse)request.GetResponse())
+            using (var stream = response.GetResponseStream())
+            using (var reader = new StreamReader(stream))
+            {
+                return reader.ReadToEnd();
+            }
         }
     }
 }

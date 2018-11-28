@@ -36,6 +36,21 @@ namespace SwissTransport
         {
             return Name;
         }
+
+        public override bool Equals(object obj)
+        {
+            if(obj is Station station)
+            {
+                return string.Equals(station.Id, this.Id);
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return (this.Id ?? string.Empty).GetHashCode();
+        }
     }
 
     public class Stations
