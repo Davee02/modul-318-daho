@@ -32,6 +32,9 @@ namespace SwissTransport
 
         [JsonProperty("stop")]
         public Stop Stop { get; set; }
+
+        [JsonProperty("platform")]
+        public string Platform { get; set; }
     }
 
     public class Stop

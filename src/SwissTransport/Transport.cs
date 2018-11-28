@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -17,9 +18,9 @@ namespace SwissTransport
                 new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
         }
 
-        public StationBoardRoot GetStationBoard(string station, string id)
+        public StationBoardRoot GetStationBoard(string id)
         {
-            var request = CreateWebRequest($"http://transport.opendata.ch/v1/stationboard?station={station}&id={id}");
+            var request = CreateWebRequest($"http://transport.opendata.ch/v1/stationboard?id={id}");
 
             return JsonConvert.DeserializeObject<StationBoardRoot>(Get(request));
         }
@@ -28,7 +29,7 @@ namespace SwissTransport
         {
             var request =
                 CreateWebRequest(
-                    $"http://transport.opendata.ch/v1/connections?from={fromStation}&to={toStation}&limit={connectionsCount}&date={departureDateTime:yyyy-MM-dd}&time={departureDateTime:hh:mm}");
+                    $"http://transport.opendata.ch/v1/connections?from={fromStation}&to={toStation}&limit={connectionsCount}&date={departureDateTime:yyyy-MM-dd}&time={departureDateTime.ToString("HH:mm", new CultureInfo("de-ch"))}");
 
             return JsonConvert.DeserializeObject<Connections>(Get(request),
                 new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
