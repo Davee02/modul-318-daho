@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Windows.Input;
 using SwissTransport.App.Helper;
 
 namespace SwissTransport.App.ViewModel
@@ -41,6 +43,7 @@ namespace SwissTransport.App.ViewModel
             }
         }
 
+        public StationBoard SelectedStationBoard { get; set; }
         public ObservableCollection<Station> Stations
         {
             get => m_stations;
@@ -61,9 +64,14 @@ namespace SwissTransport.App.ViewModel
             }
         }
 
+        public ICommand ShowStation { get; set; }
+
         public StationBoardViewModel()
         {
             m_transport = new Transport();
+            ShowStation = new RelayCommand(x =>
+                Process.Start(
+                    Helper.Helper.GetGoogleMapsLinkForCoordinates(SelectedStationBoard.Stop.Station.Coordinate)));
         }
 
         private void UpdateStationsBoard()

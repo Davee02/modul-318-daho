@@ -1,6 +1,7 @@
 ﻿using SwissTransport.App.Helper;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 
 namespace SwissTransport.App.ViewModel
@@ -19,6 +20,7 @@ namespace SwissTransport.App.ViewModel
         private DateTime m_selectedDateTime = DateTime.Now;
 
 
+        public Connection SelectedConnection { get; set; }
         public DateTime SelectedDateTime
         {
             get => m_selectedDateTime;
@@ -68,6 +70,8 @@ namespace SwissTransport.App.ViewModel
         }
 
         public ICommand SwitchStations { get; set; }
+        public ICommand ShowStartStation { get; set; }
+        public ICommand ShowStopStation { get; set; }
 
         public string StartSearchText
         {
@@ -99,6 +103,8 @@ namespace SwissTransport.App.ViewModel
         {
             m_transport = new Transport();
             SwitchStations = new RelayCommand(x => SwitchStartAndStopStations());
+            ShowStartStation = new RelayCommand(x => OpenGoogleMapsWithCoordinates(SelectedConnection.From.Station.Coordinate));
+            ShowStopStation = new RelayCommand(x => OpenGoogleMapsWithCoordinates(SelectedConnection.To.Station.Coordinate));
         }
 
         private void UpdateConnections()
@@ -117,6 +123,11 @@ namespace SwissTransport.App.ViewModel
             var tmp = StartSearchText;
             StartSearchText = StopSearchText;
             StopSearchText = tmp;
+        }
+
+        private void OpenGoogleMapsWithCoordinates(Coordinate coordinates)
+        {
+            Process.Start(Helper.Helper.GetGoogleMapsLinkForCoordinates(coordinates));
         }
     }
 }

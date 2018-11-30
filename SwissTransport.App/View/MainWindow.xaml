@@ -21,7 +21,7 @@
 
                 <StackPanel Orientation="Vertical"
                             Margin="5">
-                
+
                     <GroupBox Header="Eingaben">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -49,7 +49,7 @@
                                       Style="{StaticResource AutoExpandComboBox}"
                                       x:Name="cmbStartStation"/>
 
-                                <Label Grid.Row="1"
+                            <Label Grid.Row="1"
                                    Grid.Column="0"
                                    Content="_Endstation"/>
                             <ComboBox Grid.Row="1"
@@ -82,7 +82,8 @@
                     <GroupBox Header="Verbindungen"
                               Margin="0,20,0,0">
                         <ListView ItemsSource="{Binding Connections}"
-                                  IsSynchronizedWithCurrentItem="True">
+                                  IsSynchronizedWithCurrentItem="True"
+                                  SelectedItem="{Binding SelectedConnection}">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="Abfahrt">
@@ -92,6 +93,8 @@
                                                     <Run Text="{Binding Path=From.Station.Name}"/>
                                                     <Run Text=" - " />
                                                     <Run Text="{Binding Path=From.Departure, StringFormat=g}"/>
+                                                    <Button Content="Show Position"
+                                                            Command="{Binding DataContext.ShowStartStation, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
                                                 </TextBlock>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
@@ -100,13 +103,15 @@
                                                     DisplayMemberBinding="{Binding From.Platform}"/>
                                     <GridViewColumn Header="Ankunft">
                                         <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock>
-                                                <Run Text="{Binding Path=To.Station.Name}"/>
-                                                <Run Text=" - " />
-                                                <Run Text="{Binding Path=To.Arrival, StringFormat=g}"/>
+                                            <DataTemplate>
+                                                <TextBlock>
+                                                    <Run Text="{Binding Path=To.Station.Name}"/>
+                                                    <Run Text=" - " />
+                                                    <Run Text="{Binding Path=To.Arrival, StringFormat=g}"/>
+                                                    <Button Content="Show Position"
+                                                            Command="{Binding DataContext.ShowStopStation, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
                                                 </TextBlock>
-                                        </DataTemplate>
+                                            </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                     <GridViewColumn Header="Reisedauer"
@@ -155,18 +160,29 @@
                                    Content="_Datum / Uhrzeit"/>
                             <tools:DateTimePicker Grid.Row="1"
                                                   Grid.Column="2"
-                                                  Value="{Binding SelectedDateTime}"/>
+                                                  Value="{Binding SelectedDateTime}"
+                                                  TextAlignment="Left"/>
                         </Grid>
                     </GroupBox>
 
                     <GroupBox Header="Abfahrten"
                               Margin="0,20,0,0">
                         <ListView ItemsSource="{Binding StationBoards}"
-                                  IsSynchronizedWithCurrentItem="True">
+                                  IsSynchronizedWithCurrentItem="True"
+                                  SelectedItem="{Binding SelectedStationBoard}">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Header="Reiseziel"
-                                                    DisplayMemberBinding="{Binding To}"/>
+                                    <GridViewColumn Header="Reiseziel">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock>
+                                                    <Run Text="{Binding To}"/>
+                                                    <Button Content="Show Position"
+                                                            Command="{Binding DataContext.ShowStation, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
                                     <GridViewColumn Header="Linie">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
