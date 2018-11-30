@@ -1,6 +1,7 @@
 ﻿using SwissTransport.App.Helper;
 using System;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace SwissTransport.App.ViewModel
 {
@@ -33,7 +34,7 @@ namespace SwissTransport.App.ViewModel
             get => m_startStation;
             set
             {
-                m_startStation = value; 
+                SetProperty(ref m_startStation, value);
                 UpdateConnections();
             }
         }
@@ -43,7 +44,7 @@ namespace SwissTransport.App.ViewModel
             get => m_stopStation;
             set
             {
-                m_stopStation = value;
+                SetProperty(ref m_stopStation, value);
                 UpdateConnections();
             }
         }
@@ -66,6 +67,8 @@ namespace SwissTransport.App.ViewModel
             set => SetProperty(ref m_stopStations, value);
         }
 
+        public ICommand SwitchStations { get; set; }
+
         public string StartSearchText
         {
             get => m_startSearchText;
@@ -73,7 +76,6 @@ namespace SwissTransport.App.ViewModel
             {
                 if (!string.Equals(value, m_startSearchText))
                 {
-
                     StartStations = m_transport.GetStations(value).StationList.ToObservableCollection();
                     SetProperty(ref m_startSearchText, value);
                 }
@@ -96,6 +98,7 @@ namespace SwissTransport.App.ViewModel
         public ConnectionFinderViewModel()
         {
             m_transport = new Transport();
+            SwitchStations = new RelayCommand(x => SwitchStartAndStopStations());
         }
 
         private void UpdateConnections()
@@ -107,5 +110,13 @@ namespace SwissTransport.App.ViewModel
             }
         }
 
+        private void SwitchStartAndStopStations()
+        {
+            (StartStation, StopStation) = (StopStation, StartStation);
+
+            var tmp = StartSearchText;
+            StartSearchText = StopSearchText;
+            StopSearchText = tmp;
+        }
     }
 }

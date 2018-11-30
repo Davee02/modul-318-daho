@@ -12,7 +12,8 @@
                     Width="610"
                     MinHeight="450"
                     MinWidth="610"
-                    xml:lang="de-de">
+                    xml:lang="de-ch"
+                      FocusManager.FocusedElement="{Binding ElementName=cmbStartStation}">
     <Grid>
         <TabControl>
             <TabItem Header="Verbindung suchen"
@@ -45,8 +46,8 @@
                                       Text="{Binding StartSearchText, UpdateSourceTrigger=PropertyChanged}"
                                       IsEditable="True"
                                       IsTextSearchEnabled="False"
-                                      IsSynchronizedWithCurrentItem="False"
-                                      Style="{StaticResource AutoExpandComboBox}"/>
+                                      Style="{StaticResource AutoExpandComboBox}"
+                                      x:Name="cmbStartStation"/>
 
                                 <Label Grid.Row="1"
                                    Grid.Column="0"
@@ -59,6 +60,13 @@
                                       IsEditable="True"
                                       IsTextSearchEnabled="False"
                                       Style="{StaticResource AutoExpandComboBox}"/>
+
+                            <Button Grid.Row="0"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="3"
+                                    Command="{Binding SwitchStations}">
+                                <Image Source="../Ressources/swap.png"/>
+                            </Button>
 
                             <Label Grid.Row="2"
                                    Grid.Column="0"
@@ -157,11 +165,21 @@
                                   IsSynchronizedWithCurrentItem="True">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Header="Reiseziel"/>
-                                    <GridViewColumn Header="Linie"
-                                                    DisplayMemberBinding="{Binding}"/>
-                                    <GridViewColumn Header="Gleis / Kante"/>
-                                    <GridViewColumn Header="Abfahrtszeit"/>
+                                    <GridViewColumn Header="Reiseziel"
+                                                    DisplayMemberBinding="{Binding To}"/>
+                                    <GridViewColumn Header="Linie">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock>
+                                                    <Run Text="{Binding Path=Category}"/>
+                                                    <Run Text=" " />
+                                                    <Run Text="{Binding Path=Number}"/>
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Abfahrtszeit"
+                                                    DisplayMemberBinding="{Binding Stop.Departure, StringFormat=g}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
