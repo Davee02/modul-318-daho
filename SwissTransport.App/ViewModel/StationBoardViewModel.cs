@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Windows;
 using System.Windows.Input;
 using SwissTransport.App.Helper;
 
@@ -70,15 +71,28 @@ namespace SwissTransport.App.ViewModel
         {
             m_transport = new Transport();
             ShowStation = new RelayCommand(x =>
-                Process.Start(
-                    Helper.Helper.GetGoogleMapsLinkForCoordinates(SelectedStationBoard.Stop.Station.Coordinate)));
+                OpenGoogleMapsWithCoordinates(SelectedStationBoard.Stop.Station.Coordinate));
         }
 
         private void UpdateStationsBoard()
         {
             if (SelectedStation?.Id != null)
             {
-                StationBoards = m_transport.GetStationBoard(SelectedStation.Id).Entries.ToObservableCollection();
+                StationBoards = m_transport.GetStationBoard(SelectedStation.Id, SelectedDateTime).Entries.ToObservableCollection();
+            }
+        }
+
+        private void OpenGoogleMapsWithCoordinates(Coordinate coordinates)
+        {
+            if (coordinates != null)
+            {
+                Process.Start(Helper.Helper.GetGoogleMapsLinkForCoordinates(coordinates));
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Die ausgewählte Station kann leider nicht angezeigt werden, da dafür keine Koordinaten gespeichert sind.",
+                    "Station kann nicht angezeigt werden.", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
     }

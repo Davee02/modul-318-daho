@@ -18,8 +18,7 @@ namespace SwissTransport
         [JsonProperty("to")]
         public ConnectionPoint To { get; set; }
 
-        [JsonProperty("duration")]
-        public string Duration { get; set; }
+        public TimeSpan Duration => To.Arrival - From.Departure;
     }
 
     public class ConnectionPoint

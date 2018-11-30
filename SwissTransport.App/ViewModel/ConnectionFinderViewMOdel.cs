@@ -2,6 +2,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SwissTransport.App.ViewModel
@@ -127,7 +128,16 @@ namespace SwissTransport.App.ViewModel
 
         private void OpenGoogleMapsWithCoordinates(Coordinate coordinates)
         {
-            Process.Start(Helper.Helper.GetGoogleMapsLinkForCoordinates(coordinates));
+            if (coordinates != null)
+            {
+                Process.Start(Helper.Helper.GetGoogleMapsLinkForCoordinates(coordinates));
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Die ausgewählte Station kann leider nicht angezeigt werden, da dafür keine Koordinaten gespeichert sind.",
+                    "Station kann nicht angezeigt werden.", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
     }
 }

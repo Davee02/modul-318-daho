@@ -8,21 +8,24 @@
                     xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                     mc:Ignorable="d"
                     Title="öV-App" 
-                    Height="450"
-                    Width="610"
-                    MinHeight="450"
-                    MinWidth="610"
+                    Height="500"
+                    Width="680"
+                    MinHeight="500"
+                    MinWidth="680"
                     xml:lang="de-ch"
-                      FocusManager.FocusedElement="{Binding ElementName=cmbStartStation}">
+                    FocusManager.FocusedElement="{Binding ElementName=cmbStartStation}">
     <Grid>
         <TabControl>
-            <TabItem Header="Verbindung suchen"
+            <TabItem Header="_Verbindung suchen"
                      DataContext="{Binding TabChildren[0]}">
 
-                <StackPanel Orientation="Vertical"
-                            Margin="5">
-
-                    <GroupBox Header="Eingaben">
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <GroupBox Header="_Eingaben"
+                              Grid.Row="0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -38,7 +41,8 @@
 
                             <Label Grid.Row="0"
                                    Grid.Column="0"
-                                   Content="_Startstation"/>
+                                   Content="_Startstation"
+                                   Target="{Binding ElementName=cmbStartStation}"/>
                             <ComboBox Grid.Row="0"
                                       Grid.Column="2"
                                       SelectedItem="{Binding StartStation}"
@@ -51,7 +55,8 @@
 
                             <Label Grid.Row="1"
                                    Grid.Column="0"
-                                   Content="_Endstation"/>
+                                   Content="E_ndstation"
+                                   Target="{Binding ElementName=cmbStopStation}"/>
                             <ComboBox Grid.Row="1"
                                       Grid.Column="2"
                                       SelectedItem="{Binding StopStation}"
@@ -59,7 +64,8 @@
                                       Text="{Binding StopSearchText, UpdateSourceTrigger=PropertyChanged}"
                                       IsEditable="True"
                                       IsTextSearchEnabled="False"
-                                      Style="{StaticResource AutoExpandComboBox}"/>
+                                      Style="{StaticResource AutoExpandComboBox}"
+                                      x:Name="cmbStopStation"/>
 
                             <Button Grid.Row="0"
                                     Grid.RowSpan="2"
@@ -70,17 +76,20 @@
 
                             <Label Grid.Row="2"
                                    Grid.Column="0"
-                                   Content="_Datum / Uhrzeit"/>
+                                   Content="_Datum / Uhrzeit"
+                                   Target="{Binding ElementName=dtpConnections}"/>
                             <tools:DateTimePicker Grid.Row="2"
                                                   Grid.Column="2"
                                                   Grid.ColumnSpan="2"
                                                   Value="{Binding SelectedDateTime}"
-                                                  TextAlignment="Left"/>
+                                                  TextAlignment="Left"
+                                                  x:Name="dtpConnections"/>
                         </Grid>
                     </GroupBox>
 
-                    <GroupBox Header="Verbindungen"
-                              Margin="0,20,0,0">
+                    <GroupBox Header="Ve_rbindungen"
+                              Margin="0,20,0,0"
+                              Grid.Row="1">
                         <ListView ItemsSource="{Binding Connections}"
                                   IsSynchronizedWithCurrentItem="True"
                                   SelectedItem="{Binding SelectedConnection}">
@@ -90,11 +99,12 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock>
+                                                    <Button Command="{Binding DataContext.ShowStartStation, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}">
+                                                        <Image Source="../Ressources/map.png" Height="16" Width="16"/>
+                                                    </Button>
                                                     <Run Text="{Binding Path=From.Station.Name}"/>
                                                     <Run Text=" - " />
                                                     <Run Text="{Binding Path=From.Departure, StringFormat=g}"/>
-                                                    <Button Content="Show Position"
-                                                            Command="{Binding DataContext.ShowStartStation, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
                                                 </TextBlock>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
@@ -105,11 +115,12 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock>
+                                                    <Button Command="{Binding DataContext.ShowStopStation, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}">
+                                                        <Image Source="../Ressources/map.png" Height="16" Width="16"/>
+                                                    </Button>
                                                     <Run Text="{Binding Path=To.Station.Name}"/>
                                                     <Run Text=" - " />
                                                     <Run Text="{Binding Path=To.Arrival, StringFormat=g}"/>
-                                                    <Button Content="Show Position"
-                                                            Command="{Binding DataContext.ShowStopStation, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
                                                 </TextBlock>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
@@ -120,17 +131,21 @@
                             </ListView.View>
                         </ListView>
                     </GroupBox>
-                </StackPanel>
+                </Grid>
 
             </TabItem>
 
 
-            <TabItem Header="Abfahrtsplan"
+            <TabItem Header="_Abfahrtsplan"
                      DataContext="{Binding TabChildren[1]}">
 
-                <StackPanel Orientation="Vertical"
-                            Margin="5">
-                    <GroupBox Header="Eingaben">
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <GroupBox Header="_Eingaben"
+                              Grid.Row="0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -144,7 +159,8 @@
 
                             <Label Grid.Row="0"
                                    Grid.Column="0"
-                                   Content="_Station"/>
+                                   Content="_Station"
+                                   Target="{Binding ElementName=cmbStationBoardStation}"/>
                             <ComboBox Grid.Row="0"
                                       Grid.Column="2"
                                       SelectedItem="{Binding SelectedStation}"
@@ -153,20 +169,24 @@
                                       IsEditable="True"
                                       IsTextSearchEnabled="False"
                                       IsSynchronizedWithCurrentItem="False"
-                                      Style="{StaticResource AutoExpandComboBox}"/>
+                                      Style="{StaticResource AutoExpandComboBox}"
+                                      x:Name="cmbStationBoardStation"/>
 
                             <Label Grid.Row="1"
                                    Grid.Column="0"
-                                   Content="_Datum / Uhrzeit"/>
+                                   Content="_Datum / Uhrzeit"
+                                   Target="{Binding ElementName=dtpStationBoards}"/>
                             <tools:DateTimePicker Grid.Row="1"
                                                   Grid.Column="2"
                                                   Value="{Binding SelectedDateTime}"
-                                                  TextAlignment="Left"/>
+                                                  TextAlignment="Left"
+                                                  x:Name="dtpStationBoards"/>
                         </Grid>
                     </GroupBox>
 
-                    <GroupBox Header="Abfahrten"
-                              Margin="0,20,0,0">
+                    <GroupBox Header="_Abfahrten"
+                              Margin="0,20,0,0"
+                              Grid.Row="1">
                         <ListView ItemsSource="{Binding StationBoards}"
                                   IsSynchronizedWithCurrentItem="True"
                                   SelectedItem="{Binding SelectedStationBoard}">
@@ -176,9 +196,10 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock>
+                                                    <Button Command="{Binding DataContext.ShowStation, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}">
+                                                        <Image Source="../Ressources/map.png" Height="16" Width="16"/>
+                                                    </Button>
                                                     <Run Text="{Binding To}"/>
-                                                    <Button Content="Show Position"
-                                                            Command="{Binding DataContext.ShowStation, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"/>
                                                 </TextBlock>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
@@ -188,7 +209,6 @@
                                             <DataTemplate>
                                                 <TextBlock>
                                                     <Run Text="{Binding Path=Category}"/>
-                                                    <Run Text=" " />
                                                     <Run Text="{Binding Path=Number}"/>
                                                 </TextBlock>
                                             </DataTemplate>
@@ -200,7 +220,7 @@
                             </ListView.View>
                         </ListView>
                     </GroupBox>
-                </StackPanel>
+                </Grid>
 
             </TabItem>
         </TabControl>

@@ -140,5 +140,8 @@
   <ItemGroup>
     <Resource Include="Ressources\swap.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Ressources\map.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
