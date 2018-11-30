@@ -81,7 +81,7 @@ namespace SwissTransport.App.ViewModel
             {
                 if (!string.Equals(value, m_startSearchText))
                 {
-                    StartStations = m_transport.GetStations(value).StationList.ToObservableCollection();
+                    StartStations = m_transport.GetStations(value).Result.StationList.ToObservableCollection();
                     SetProperty(ref m_startSearchText, value);
                 }
             }
@@ -94,7 +94,7 @@ namespace SwissTransport.App.ViewModel
             {
                 if (!string.Equals(value, m_stopSearchText))
                 {
-                    StopStations = m_transport.GetStations(value).StationList.ToObservableCollection();
+                    StopStations = m_transport.GetStations(value).Result.StationList.ToObservableCollection();
                     SetProperty(ref m_stopSearchText, value);
                 }
             }
@@ -107,13 +107,12 @@ namespace SwissTransport.App.ViewModel
             ShowStartStation = new RelayCommand(x => OpenGoogleMapsWithCoordinates(SelectedConnection.From.Station.Coordinate));
             ShowStopStation = new RelayCommand(x => OpenGoogleMapsWithCoordinates(SelectedConnection.To.Station.Coordinate));
         }
-
-        private void UpdateConnections()
+        private async void UpdateConnections()
         {
             if (StartStation?.Id != null && StopStation?.Id != null)
             {
                 var allConnections = m_transport.GetConnections(StartStation.Id, StopStation.Id, 16, SelectedDateTime);
-                Connections = allConnections.ConnectionList.ToObservableCollection();
+                Connections = (await allConnections).ConnectionList.ToObservableCollection();
             }
         }
 

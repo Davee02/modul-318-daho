@@ -12,7 +12,7 @@ namespace SwissTransport
         public void Locations()
         {
             testee = new Transport();
-            var stations = testee.GetStations("Sursee,");
+            var stations = testee.GetStations("Sursee,").Result;
 
             Assert.AreEqual(10, stations.StationList.Count);
         }
@@ -21,7 +21,7 @@ namespace SwissTransport
         public void StationBoard()
         {
             testee = new Transport();
-            var stationBoard = testee.GetStationBoard("8502007", DateTime.Now);
+            var stationBoard = testee.GetStationBoard("8502007", DateTime.Now).Result;
 
             Assert.IsNotNull(stationBoard);
         }
@@ -30,7 +30,7 @@ namespace SwissTransport
         public void Connections()
         {
             testee = new Transport();
-            var connections = testee.GetConnections("Sursee", "Luzern", 1, DateTime.Now);
+            var connections = testee.GetConnections("Sursee", "Luzern", 1, DateTime.Now).Result;
 
             Assert.IsNotNull(connections);
         }

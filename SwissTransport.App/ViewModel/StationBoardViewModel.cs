@@ -59,7 +59,7 @@ namespace SwissTransport.App.ViewModel
                 if (!string.Equals(value, m_searchText))
                 {
 
-                    Stations = m_transport.GetStations(value).StationList.ToObservableCollection();
+                    Stations = m_transport.GetStations(value).Result.StationList.ToObservableCollection();
                     SetProperty(ref m_searchText, value);
                 }
             }
@@ -74,11 +74,11 @@ namespace SwissTransport.App.ViewModel
                 OpenGoogleMapsWithCoordinates(SelectedStationBoard.Stop.Station.Coordinate));
         }
 
-        private void UpdateStationsBoard()
+        private async void UpdateStationsBoard()
         {
             if (SelectedStation?.Id != null)
             {
-                StationBoards = m_transport.GetStationBoard(SelectedStation.Id, SelectedDateTime).Entries.ToObservableCollection();
+                StationBoards = (await m_transport.GetStationBoard(SelectedStation.Id, SelectedDateTime)).Entries.ToObservableCollection();
             }
         }
 
