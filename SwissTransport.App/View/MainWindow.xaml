@@ -251,7 +251,8 @@
                                    Target="{Binding ElementName=btnSearchNearStations}" />
                             <StackPanel Orientation="Horizontal" 
                                         Grid.Row="0"
-                                        Grid.Column="2">
+                                        Grid.Column="2"
+                                        HorizontalAlignment="Center">
                             <Button Command="{Binding GetDevicePosition}"
                                     x:Name="btnSearchNearStations"
                                     Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}"
