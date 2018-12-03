@@ -10,7 +10,7 @@ namespace SwissTransport
     {
         public async Task<Stations> GetStations(string query)
         {
-            var request = CreateWebRequest("http://transport.opendata.ch/v1/locations?type=station&query=" + query);
+            var request = CreateWebRequest("http://transport.opendata.ch/v1/locations?query=" + query);
 
             return JsonConvert.DeserializeObject<Stations>(await Get(request).ConfigureAwait(false),
                 new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
@@ -18,7 +18,7 @@ namespace SwissTransport
 
         public async Task<Stations> GetStations(Coordinate coordinates)
         {
-            var request = CreateWebRequest($"http://transport.opendata.ch/v1/locations?type=station&x={coordinates.XCoordinate}&y={coordinates.YCoordinate}");
+            var request = CreateWebRequest($"http://transport.opendata.ch/v1/locations?x={coordinates.XCoordinate}&y={coordinates.YCoordinate}");
 
             return JsonConvert.DeserializeObject<Stations>(await Get(request).ConfigureAwait(false),
                 new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });

@@ -9,9 +9,9 @@
                     mc:Ignorable="d"
                     Title="öV-App" 
                     Height="500"
-                    Width="680"
+                    Width="720"
                     MinHeight="500"
-                    MinWidth="680"
+                    MinWidth="720"
                     xml:lang="de-ch"
                     FocusManager.FocusedElement="{Binding ElementName=cmbStartStation}">
     <Grid>

@@ -1,6 +1,7 @@
 ﻿using SwissTransport.App.Helper;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -32,7 +33,10 @@ namespace SwissTransport.App.ViewModel
                 if (!string.Equals(value, m_searchText))
                 {
 
-                    Stations = m_transport.GetStations(value).Result.StationList.ToObservableCollection();
+                    Stations = m_transport.GetStations(value).Result.StationList
+                        .Where(x => x.Id != null)
+                        .ToObservableCollection();
+
                     SetProperty(ref m_searchText, value);
                 }
             }
@@ -146,7 +150,9 @@ namespace SwissTransport.App.ViewModel
             }
             else
             {
-                NearStations = stations.StationList.ToObservableCollection();
+                NearStations = stations.StationList
+                    .Where(x => x.Id != null)
+                    .ToObservableCollection();
             }
         }
 

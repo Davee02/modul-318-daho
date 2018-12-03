@@ -2,6 +2,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -81,7 +82,10 @@ namespace SwissTransport.App.ViewModel
             {
                 if (!string.Equals(value, m_startSearchText))
                 {
-                    StartStations = m_transport.GetStations(value).Result.StationList.ToObservableCollection();
+                    StartStations = m_transport.GetStations(value).Result.StationList
+                        .Where(x => x.Id != null)
+                        .ToObservableCollection();
+
                     SetProperty(ref m_startSearchText, value);
                 }
             }
@@ -94,7 +98,10 @@ namespace SwissTransport.App.ViewModel
             {
                 if (!string.Equals(value, m_stopSearchText))
                 {
-                    StopStations = m_transport.GetStations(value).Result.StationList.ToObservableCollection();
+                    StopStations = m_transport.GetStations(value).Result.StationList
+                        .Where(x => x.Id != null)
+                        .ToObservableCollection();
+
                     SetProperty(ref m_stopSearchText, value);
                 }
             }
