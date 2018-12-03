@@ -1,7 +1,10 @@
 ﻿using SwissTransport.App.Helper;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -159,7 +162,34 @@ namespace SwissTransport.App.ViewModel
 
         public void SendResultsAsMail()
         {
-            throw new System.NotImplementedException();
+            var mailContentBuilder = new StringBuilder();
+            mailContentBuilder.AppendLine("Hallo!");
+            mailContentBuilder.AppendLine(
+                $"Sieh dir an, welche Stationen ich in der Nähe der Koordinaten {FoundCoordinates} gefunden habe:\n");
+            mailContentBuilder.Append("<table border='1' style='border-collapse:collapse' cellpadding='5'");
+            mailContentBuilder.Append("<tr><th>Name</th><th>Koordinaten</th></tr>");
+
+            foreach (var station in NearStations)
+            {
+                mailContentBuilder.Append("<tr>");
+                mailContentBuilder.Append($"<td>{station}</td>");
+                mailContentBuilder.Append($"<td>{station.Coordinate}</td>");
+                mailContentBuilder.Append("</tr>");
+            }
+            mailContentBuilder.Append("</table>");
+
+            var mailMessage = new MailMessage
+            {
+                Subject = "Resultate von TransportGate",
+                IsBodyHtml = true,
+                Body = mailContentBuilder.ToString(),
+                From = new MailAddress("resultate@transportgate.ch")
+            };
+
+            var filename = Path.Combine(Path.GetTempPath(), Path.GetTempFileName() + ".eml");
+            mailMessage.Save(filename);
+
+            Process.Start(filename);
         }
     }
 }

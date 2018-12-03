@@ -1,11 +1,13 @@
 ﻿using SwissTransport.App.Helper;
+using SwissTransport.App.Model;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using System.Windows;
+using System.Net.Mail;
+using System.Text;
 using System.Windows.Input;
-using SwissTransport.App.Model;
 
 namespace SwissTransport.App.ViewModel
 {
@@ -142,7 +144,36 @@ namespace SwissTransport.App.ViewModel
 
         public void SendResultsAsMail()
         {
-            throw new NotImplementedException();
+            var mailContentBuilder = new StringBuilder();
+            mailContentBuilder.AppendLine("Hallo!");
+            mailContentBuilder.AppendLine(
+                $"Sieh dir an, welche Verbindungen ich von {StartStation} nach {StopStation} am {SelectedDateTime:D} um {SelectedDateTime:t} gefunden habe:\n");
+            mailContentBuilder.Append("<table border='1' style='border-collapse:collapse' cellpadding='5'");
+            mailContentBuilder.Append("<tr><th>Abfahrt</th><th>Gleis - Kante</th><th>Ankunft</th><th>Reisedauer</th></tr>");
+
+            foreach (var connection in Connections)
+            {
+                mailContentBuilder.Append("<tr>");
+                mailContentBuilder.Append($"<td>{connection.From.Station} - {connection.From.Departure:g}</td>");
+                mailContentBuilder.Append($"<td>{connection.From.Platform}</td>");
+                mailContentBuilder.Append($"<td>{connection.To.Station} - {connection.To.Arrival:g}</td>");
+                mailContentBuilder.Append($"<td>{connection.Duration}</td>");
+                mailContentBuilder.Append("</tr>");
+            }
+            mailContentBuilder.Append("</table>");
+
+            var mailMessage = new MailMessage
+            {
+                Subject = "Resultate von TransportGate",
+                IsBodyHtml = true,
+                Body = mailContentBuilder.ToString(),
+                From = new MailAddress("resultate@transportgate.ch")
+            };
+
+            var filename = Path.Combine(Path.GetTempPath(), Path.GetTempFileName() + ".eml");
+            mailMessage.Save(filename);
+
+            Process.Start(filename);
         }
     }
 }

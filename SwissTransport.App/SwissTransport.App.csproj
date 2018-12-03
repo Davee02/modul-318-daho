@@ -98,6 +98,8 @@
     </Compile>
     <Compile Include="Helper\GeoLocator.cs" />
     <Compile Include="Helper\Helper.cs" />
+    <Compile Include="Helper\MailUtility.cs" />
+    <Compile Include="Model\ITransportResultViewModel.cs" />
     <Compile Include="ViewModel\ConnectionFinderViewModel.cs" />
     <Compile Include="ViewModel\NearStationsViewModel.cs" />
     <Compile Include="ViewModel\StationBoardViewModel.cs" />
@@ -142,9 +144,7 @@
       <Name>SwissTransport</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Ressources\swap.png" />
   </ItemGroup>
@@ -156,6 +156,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="bus.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Ressources\mail.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

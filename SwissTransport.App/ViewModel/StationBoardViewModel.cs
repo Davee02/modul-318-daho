@@ -1,7 +1,11 @@
 ﻿using SwissTransport.App.Helper;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Text;
 using System.Windows.Input;
 using SwissTransport.App.Model;
 
@@ -90,7 +94,35 @@ namespace SwissTransport.App.ViewModel
 
         public void SendResultsAsMail()
         {
-            throw new NotImplementedException();
+            var mailContentBuilder = new StringBuilder();
+            mailContentBuilder.AppendLine("Hallo!");
+            mailContentBuilder.AppendLine(
+                $"Sieh dir an, welche Verbindungen von {SelectedStation} am {SelectedDateTime:D} ab {SelectedDateTime:t} abfahren:\n");
+            mailContentBuilder.Append("<table border='1' style='border-collapse:collapse' cellpadding='5'");
+            mailContentBuilder.Append("<tr><th>Reiseziel</th><th>Linie</th><th>Abfahrtszeit</th></tr>");
+
+            foreach (var stationBoard in StationBoards)
+            {
+                mailContentBuilder.Append("<tr>");
+                mailContentBuilder.Append($"<td>{stationBoard.To}</td>");
+                mailContentBuilder.Append($"<td>{stationBoard.Category} {stationBoard.Number}</td>");
+                mailContentBuilder.Append($"<td>{stationBoard.Stop.Departure}</td>");
+                mailContentBuilder.Append("</tr>");
+            }
+            mailContentBuilder.Append("</table>");
+
+            var mailMessage = new MailMessage
+            {
+                Subject = "Resultate von TransportGate",
+                IsBodyHtml = true,
+                Body = mailContentBuilder.ToString(),
+                From = new MailAddress("resultate@transportgate.ch")
+            };
+
+            var filename = Path.Combine(Path.GetTempPath(), Path.GetTempFileName() + ".eml");
+            mailMessage.Save(filename);
+
+            Process.Start(filename);
         }
     }
 }
