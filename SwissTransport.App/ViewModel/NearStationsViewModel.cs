@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SwissTransport.App.Helper;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using SwissTransport.App.Helper;
 using System.Windows.Input;
 
 namespace SwissTransport.App.ViewModel
@@ -19,8 +15,15 @@ namespace SwissTransport.App.ViewModel
         private Station m_selectedManualStation = new Station();
         private ObservableCollection<Station> m_stations = new ObservableCollection<Station>();
         private string m_searchText;
+        private bool m_locaterIsActive = false;
+
 
         public Station SelectedStation { get; set; }
+        public bool LocaterIsActive
+        {
+            get => m_locaterIsActive;
+            set => SetProperty(ref m_locaterIsActive, value);
+        }
         public string SearchText
         {
             get => m_searchText;
@@ -75,6 +78,8 @@ namespace SwissTransport.App.ViewModel
 
         private async void SetNearStations()
         {
+            LocaterIsActive = true;
+            bool success = true;
             await Task.Run(async () =>
                 {
                     try
@@ -82,6 +87,8 @@ namespace SwissTransport.App.ViewModel
                         var geoLocator = new GeoLocator();
                         if (geoLocator.StartLocator() && geoLocator.HasPermissions)
                         {
+                            await Task.Delay(500);
+
                             int i = 0;
                             while (i < 20)
                             {
@@ -100,6 +107,7 @@ namespace SwissTransport.App.ViewModel
                             MessageBox.Show(
                                 "Die Position konnte leider nicht ermittelt werden. Bitte aktivieren Sie die Positionsdienste in Ihren Windows-Einstellungen und versuchen Sie es in ein paar Sekunden erneut.",
                                 "Positionierung fehlgeschlagen", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            success = false;
                             return;
                         }
                     }
@@ -108,11 +116,15 @@ namespace SwissTransport.App.ViewModel
                         MessageBox.Show(
                             "Die Position konnte leider nicht ermittelt werden. Bitte aktivieren Sie die Positionsdienste in Ihren Windows-Einstellungen und versuchen Sie es in ein paar Sekunden erneut.",
                             "Positionierung fehlgeschlagen", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        success = false;
                         return;
                     }
                 }
             );
-            UpdateStations();
+            LocaterIsActive = false;
+
+            if(success)
+                UpdateStations();
         }
 
         private async void UpdateStations()

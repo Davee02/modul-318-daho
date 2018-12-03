@@ -261,7 +261,10 @@
                                 <Image Source="../Ressources/gps.png" />
                             </Button>
 
-                                <controls:ProgressRing IsActive="{Binding LocaterIsActive}"/>
+                                <controls:ProgressRing IsActive="{Binding LocaterIsActive}"
+                                                       Height="30"
+                                                       Width="30"
+                                                       Margin="50,0,0,0"/>
                             </StackPanel>
 
                             <Label Grid.Row="1"
