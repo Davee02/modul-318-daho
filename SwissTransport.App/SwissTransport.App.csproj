@@ -43,6 +43,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Device" />
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Runtime.InteropServices.WindowsRuntime" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net462\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -90,8 +93,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helper\GeoLocator.cs" />
     <Compile Include="Helper\Helper.cs" />
     <Compile Include="ViewModel\ConnectionFinderViewModel.cs" />
+    <Compile Include="ViewModel\NearStationsViewModel.cs" />
     <Compile Include="ViewModel\StationBoardViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
@@ -142,6 +147,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Ressources\map.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Ressources\gps.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

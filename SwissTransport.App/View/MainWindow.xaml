@@ -223,6 +223,126 @@
                 </Grid>
 
             </TabItem>
+
+            <TabItem Header="_Stationen in der Nähe"
+                     DataContext="{Binding TabChildren[2]}">
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <GroupBox Header="_Eingaben">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="30"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0"
+                                   Grid.Column="0"
+                                   Content="_Nach Stationen in der Nähe suchen"
+                                   Target="{Binding ElementName=btnSearchNearStations}" />
+                            <StackPanel Orientation="Horizontal" 
+                                        Grid.Row="0"
+                                        Grid.Column="2">
+                            <Button Command="{Binding GetDevicePosition}"
+                                    x:Name="btnSearchNearStations"
+                                    Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}"
+                                    Height="30"
+                                    Width="30">
+                                <Image Source="../Ressources/gps.png" />
+                            </Button>
+
+                                <controls:ProgressRing IsActive="{Binding LocaterIsActive}"/>
+                            </StackPanel>
+
+                            <Label Grid.Row="1"
+                                   Grid.Column="0"
+                                   Content="_Manuell Station in der Nähe auswählen"
+                                   Target="{Binding ElementName=cmbManualStation}"/>
+                            <ComboBox Grid.Row="1"
+                                      Grid.Column="2"
+                                      SelectedItem="{Binding SelectedManualStation}"
+                                      ItemsSource="{Binding Stations}"
+                                      Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                                      IsEditable="True"
+                                      IsTextSearchEnabled="False"
+                                      IsSynchronizedWithCurrentItem="False"
+                                      Style="{StaticResource AutoExpandComboBox}"
+                                      x:Name="cmbManualStation"/>
+                        </Grid>
+                    </GroupBox>
+
+                    <GroupBox Header="_Koordinaten"
+                              Grid.Row="1"
+                              Margin="0,20,0,0">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="30"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+
+                            <Label Grid.Row="0"
+                                   Grid.Column="0"
+                                   Content="_X-Koordinate"
+                                   Target="{Binding ElementName=txbFoundXCoordinate}" />
+                            <TextBlock Grid.Row="0"
+                                     Grid.Column="2"
+                                     Text="{Binding FoundCoordinates.XCoordinate}"
+                                     x:Name="txbFoundXCoordinate"/>
+
+                            <Label Grid.Row="1"
+                                   Grid.Column="0"
+                                   Content="_Y-Koordinate"
+                                   Target="{Binding ElementName=txbFoundYCoordinate}" />
+                            <TextBlock Grid.Row="1"
+                                     Grid.Column="2"
+                                     Text="{Binding FoundCoordinates.YCoordinate}"
+                                     x:Name="txbFoundYCoordinate"/>
+                        </Grid>
+                    </GroupBox>
+
+                    <GroupBox Header="S_tationen"
+                              Grid.Row="2"
+                              Margin="0,20,0,0">
+                        <ListView ItemsSource="{Binding NearStations}"
+                                  IsSynchronizedWithCurrentItem="True"
+                                  SelectedItem="{Binding SelectedStation}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Name"
+                                                    DisplayMemberBinding="{Binding Name}"/>
+                                    <GridViewColumn Header="Koordinaten"
+                                                    DisplayMemberBinding="{Binding Coordinate}"/>
+                                    <GridViewColumn Header="Position anzeigen">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Command="{Binding DataContext.ShowStation, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}">
+                                                    <Image Source="../Ressources/map.png" Height="16" Width="16"/>
+                                                </Button>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
         </TabControl>
     </Grid>
 </controls:MetroWindow>
