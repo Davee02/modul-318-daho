@@ -72,11 +72,14 @@ namespace SwissTransport.App.ViewModel
         public NearStationsViewModel()
         {
             m_transport = new Transport();
-            GetDevicePosition = new RelayCommand(x => SetNearStations());
+            GetDevicePosition = new RelayCommand(x => GetCurrentPosition());
             ShowStation = new RelayCommand(x => OpenGoogleMapsWithCoordinates(SelectedStation.Coordinate));
         }
 
-        private async void SetNearStations()
+        /// <summary>
+        /// Tries to get the current coordinates and displays a warning-messagebox, when it fails
+        /// </summary>
+        private async void GetCurrentPosition()
         {
             LocaterIsActive = true;
             bool success = true;
@@ -90,6 +93,7 @@ namespace SwissTransport.App.ViewModel
                             await Task.Delay(500);
 
                             int i = 0;
+                            // Try to get the current location 20 times with a delay of 0.2 seconds between the tries
                             while (i < 20)
                             {
                                 if (geoLocator.LocatorIsReady)
@@ -127,6 +131,9 @@ namespace SwissTransport.App.ViewModel
                 UpdateStations();
         }
 
+        /// <summary>
+        /// Set the collection, which holds all the station-items, new
+        /// </summary>
         private async void UpdateStations()
         {
             var stations = await m_transport.GetStations(FoundCoordinates);
@@ -142,6 +149,11 @@ namespace SwissTransport.App.ViewModel
                 NearStations = stations.StationList.ToObservableCollection();
             }
         }
+
+        /// <summary>
+        /// Opens the link to Google-Maps with a marker in the standard-browser
+        /// </summary>
+        /// <param name="coordinates">The coordinates where the marker should be placed</param>
 
         private void OpenGoogleMapsWithCoordinates(Coordinate coordinates)
         {

@@ -4,6 +4,7 @@ namespace SwissTransport.App.ViewModel
 {
     class MainViewModel : ViewModelBase
     {
+        // Holds all the viewmodels for the individual tabs in the tabcontrol
         public ObservableCollection<object> TabChildren { private get; set; } = new ObservableCollection<object>();
 
         public MainViewModel()

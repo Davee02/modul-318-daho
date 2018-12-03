@@ -74,6 +74,9 @@ namespace SwissTransport.App.ViewModel
                 OpenGoogleMapsWithCoordinates(SelectedStationBoard.Stop.Station.Coordinate));
         }
 
+        /// <summary>
+        /// Set the collection, which holds all the stationboard-items, new
+        /// </summary>
         private async void UpdateStationsBoard()
         {
             if (SelectedStation?.Id != null)
@@ -82,6 +85,10 @@ namespace SwissTransport.App.ViewModel
             }
         }
 
+        /// <summary>
+        /// Opens the link to Google-Maps with a marker in the standard-browser
+        /// </summary>
+        /// <param name="coordinates">The coordinates where the marker should be placed</param>
         private void OpenGoogleMapsWithCoordinates(Coordinate coordinates)
         {
             if (coordinates != null)

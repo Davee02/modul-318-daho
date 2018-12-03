@@ -108,6 +108,9 @@ namespace SwissTransport.App.ViewModel
             ShowStopStation = new RelayCommand(x => OpenGoogleMapsWithCoordinates(SelectedConnection.To.Station.Coordinate));
         }
 
+        /// <summary>
+        /// Set the collection, which holds all the connection-items, new
+        /// </summary>
         private async void UpdateConnections()
         {
             if (StartStation?.Id != null && StopStation?.Id != null)
@@ -117,6 +120,9 @@ namespace SwissTransport.App.ViewModel
             }
         }
 
+        /// <summary>
+        /// Switchs the Start- and Stopstation
+        /// </summary>
         private void SwitchStartAndStopStations()
         {
             (StartStation, StopStation) = (StopStation, StartStation);
@@ -126,6 +132,10 @@ namespace SwissTransport.App.ViewModel
             StopSearchText = tmp;
         }
 
+        /// <summary>
+        /// Opens the link to Google-Maps with a marker in the standard-browser
+        /// </summary>
+        /// <param name="coordinates">The coordinates where the marker should be placed</param>
         private void OpenGoogleMapsWithCoordinates(Coordinate coordinates)
         {
             if (coordinates != null)
