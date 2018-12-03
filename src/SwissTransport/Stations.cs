@@ -13,6 +13,11 @@ namespace SwissTransport
 
         [JsonProperty("y")]
         public double YCoordinate { get; set; }
+
+        public override string ToString()
+        {
+            return $"{this.XCoordinate} / {this.YCoordinate}";
+        }
     }
 
     public class Station

@@ -107,6 +107,7 @@ namespace SwissTransport.App.ViewModel
             ShowStartStation = new RelayCommand(x => OpenGoogleMapsWithCoordinates(SelectedConnection.From.Station.Coordinate));
             ShowStopStation = new RelayCommand(x => OpenGoogleMapsWithCoordinates(SelectedConnection.To.Station.Coordinate));
         }
+
         private async void UpdateConnections()
         {
             if (StartStation?.Id != null && StopStation?.Id != null)

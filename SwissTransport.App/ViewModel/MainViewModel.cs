@@ -10,6 +10,7 @@ namespace SwissTransport.App.ViewModel
         {
             TabChildren.Add(new ConnectionFinderViewModel());
             TabChildren.Add(new StationBoardViewModel());
+            TabChildren.Add(new NearStationsViewModel());
         }
     }
 }
