@@ -1,14 +1,13 @@
-﻿using System;
+﻿using SwissTransport.App.Helper;
+using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Windows;
 using System.Windows.Input;
-using SwissTransport.App.Helper;
+using SwissTransport.App.Model;
 
 namespace SwissTransport.App.ViewModel
 {
-    public class StationBoardViewModel : ViewModelBase
+    public class StationBoardViewModel : ViewModelBase, ITransportResultViewModel
     {
         private readonly ITransport m_transport;
 
@@ -75,7 +74,7 @@ namespace SwissTransport.App.ViewModel
         {
             m_transport = new Transport();
             ShowStation = new RelayCommand(x =>
-                OpenGoogleMapsWithCoordinates(SelectedStationBoard.Stop.Station.Coordinate));
+                Helper.Helper.OpenGoogleMapsWithCoordinates(SelectedStationBoard.Stop.Station.Coordinate));
         }
 
         /// <summary>
@@ -89,22 +88,9 @@ namespace SwissTransport.App.ViewModel
             }
         }
 
-        /// <summary>
-        /// Opens the link to Google-Maps with a marker in the standard-browser
-        /// </summary>
-        /// <param name="coordinates">The coordinates where the marker should be placed</param>
-        private void OpenGoogleMapsWithCoordinates(Coordinate coordinates)
+        public void SendResultsAsMail()
         {
-            if (coordinates != null)
-            {
-                Process.Start(Helper.Helper.GetGoogleMapsLinkForCoordinates(coordinates));
-            }
-            else
-            {
-                MessageBox.Show(
-                    "Die ausgewählte Station kann leider nicht angezeigt werden, da dafür keine Koordinaten gespeichert sind.",
-                    "Station kann nicht angezeigt werden.", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
+            throw new NotImplementedException();
         }
     }
 }

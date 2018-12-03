@@ -5,10 +5,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using SwissTransport.App.Model;
 
 namespace SwissTransport.App.ViewModel
 {
-    public class ConnectionFinderViewModel : ViewModelBase
+    public class ConnectionFinderViewModel : ViewModelBase, ITransportResultViewModel
     {
         private readonly ITransport m_transport;
 
@@ -111,8 +112,8 @@ namespace SwissTransport.App.ViewModel
         {
             m_transport = new Transport();
             SwitchStations = new RelayCommand(x => SwitchStartAndStopStations());
-            ShowStartStation = new RelayCommand(x => OpenGoogleMapsWithCoordinates(SelectedConnection.From.Station.Coordinate));
-            ShowStopStation = new RelayCommand(x => OpenGoogleMapsWithCoordinates(SelectedConnection.To.Station.Coordinate));
+            ShowStartStation = new RelayCommand(x => Helper.Helper.OpenGoogleMapsWithCoordinates(SelectedConnection.From.Station.Coordinate));
+            ShowStopStation = new RelayCommand(x => Helper.Helper.OpenGoogleMapsWithCoordinates(SelectedConnection.To.Station.Coordinate));
         }
 
         /// <summary>
@@ -139,22 +140,9 @@ namespace SwissTransport.App.ViewModel
             StopSearchText = tmp;
         }
 
-        /// <summary>
-        /// Opens the link to Google-Maps with a marker in the standard-browser
-        /// </summary>
-        /// <param name="coordinates">The coordinates where the marker should be placed</param>
-        private void OpenGoogleMapsWithCoordinates(Coordinate coordinates)
+        public void SendResultsAsMail()
         {
-            if (coordinates != null)
-            {
-                Process.Start(Helper.Helper.GetGoogleMapsLinkForCoordinates(coordinates));
-            }
-            else
-            {
-                MessageBox.Show(
-                    "Die ausgewählte Station kann leider nicht angezeigt werden, da dafür keine Koordinaten gespeichert sind.",
-                    "Station kann nicht angezeigt werden.", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Windows;
 
 namespace SwissTransport.App.Helper
 {
@@ -23,6 +25,24 @@ namespace SwissTransport.App.Helper
         public static string GetGoogleMapsLinkForCoordinates(Coordinate coordinates)
         {
             return $"http://www.google.com/maps/place/{coordinates.XCoordinate},{coordinates.YCoordinate}/data=!3m1!1e3";
+        }
+
+        /// <summary>
+        /// Opens the link to Google-Maps with a marker in the standard-browser
+        /// </summary>
+        /// <param name="coordinates">The coordinates where the marker should be placed</param>
+        public static void OpenGoogleMapsWithCoordinates(Coordinate coordinates)
+        {
+            if (coordinates != null)
+            {
+                Process.Start(SwissTransport.App.Helper.Helper.GetGoogleMapsLinkForCoordinates(coordinates));
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Die ausgewählte Station kann leider nicht angezeigt werden, da dafür keine Koordinaten gespeichert sind.",
+                    "Station kann nicht angezeigt werden.", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
     }
 }
