@@ -25,18 +25,23 @@ namespace SwissTransport.App.ViewModel
 
         private void SendEmailWithSearchResults(object selectedTabItemIndex)
         {
-            if(!(selectedTabItemIndex is int index))
-                return;
-
-            var viewModel = (ITransportResultViewModel)TabChildren[index];
-            try
+            if (selectedTabItemIndex is int index && TabChildren[index] is ITransportResultViewModel viewModel)
             {
-                viewModel.SendResultsAsMail();
+                try
+                {
+                    viewModel.SendResultsAsMail();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Beim Senden des E-Mails ist der folgende Fehler aufgetreten:\n\n" + e,
+                        "Es ist ein Fehler aufgetreten", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-            catch (Exception e)
+            else
             {
-                MessageBox.Show("Beim Senden des E-Mails ist der folgende Fehler aufgetreten:\n\n" + e,
-                    "Es ist ein Fehler aufgetreten", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(
+                    "Eine E-Mail mit den Resultaten der aktuellen Anzeige kann leider nicht erstellt werden.",
+                    "E-Mail kann nicht erstellt werden", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
     }
