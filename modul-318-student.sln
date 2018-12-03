@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwissTransport", "src\Swiss
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwissTransportTest", "tests\SwissTransportTest\SwissTransportTest.csproj", "{959C6E54-5B1C-40F5-938A-C57B17451421}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwissTransport.App", "SwissTransport.App\SwissTransport.App.csproj", "{68BF5F32-DBD8-458E-A91E-790D8BA9031D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportGate", "SwissTransport.App\TransportGate.csproj", "{68BF5F32-DBD8-458E-A91E-790D8BA9031D}"
 EndProject
 Project("{840C416C-B8F3-42BC-B0DD-F6BB14C9F8CB}") = "SwissTransport.Installer", "SwissTransport.Installer\SwissTransport.Installer.aiproj", "{84FC9011-EC20-43E4-AF40-284068DE5D5B}"
 EndProject

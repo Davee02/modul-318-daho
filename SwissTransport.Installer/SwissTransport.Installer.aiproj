@@ -23,11 +23,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SwissTransport.App\SwissTransport.App.csproj">
-      <Name>SwissTransport.App</Name>
+    <ProjectReference Include="..\SwissTransport.App\TransportGate.csproj">
+      <Name>TransportGate</Name>
       <Project>{68bf5f32-dbd8-458e-a91e-790d8ba9031d}</Project>
       <Private>True</Private>
-      <OutputsToImport>PrimaryOutput;SymbolsOutput;References</OutputsToImport>
+      <OutputsToImport>PrimaryOutput;References</OutputsToImport>
     </ProjectReference>
   </ItemGroup>
   <Target Name="Build">
