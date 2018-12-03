@@ -13,8 +13,11 @@ namespace SwissTransport
         {
             testee = new Transport();
             var stations = testee.GetStations("Sursee,").Result;
+            var stationsByCoordinates =
+                testee.GetStations(new Coordinate {XCoordinate = 47.07164, YCoordinate = 8.34877}).Result;
 
             Assert.AreEqual(10, stations.StationList.Count);
+            Assert.AreEqual(10, stationsByCoordinates.StationList.Count);
         }
 
         [TestMethod]

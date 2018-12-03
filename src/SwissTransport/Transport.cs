@@ -16,6 +16,14 @@ namespace SwissTransport
                 new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
         }
 
+        public async Task<Stations> GetStations(Coordinate coordinates)
+        {
+            var request = CreateWebRequest($"http://transport.opendata.ch/v1/locations?type=station&x={coordinates.XCoordinate}&y={coordinates.YCoordinate}");
+
+            return JsonConvert.DeserializeObject<Stations>(await Get(request).ConfigureAwait(false),
+                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+        }
+
         public async Task<StationBoardRoot> GetStationBoard(string id, DateTime departureDateTime)
         {
             var request = CreateWebRequest($"http://transport.opendata.ch/v1/stationboard?id={id}&datetime={departureDateTime:yyyy-MM-dd HH:mm}");
