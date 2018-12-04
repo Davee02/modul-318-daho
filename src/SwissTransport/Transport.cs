@@ -10,7 +10,7 @@ namespace SwissTransport
     {
         public async Task<Stations> GetStations(string query)
         {
-            var request = CreateWebRequest("http://transport.opendata.ch/v1/locations?query=" + query);
+            var request = CreateWebRequest($"http://transport.opendata.ch/v1/locations?query={query}");
 
             return JsonConvert.DeserializeObject<Stations>(await Get(request).ConfigureAwait(false),
                 new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
@@ -18,7 +18,9 @@ namespace SwissTransport
 
         public async Task<Stations> GetStations(Coordinate coordinates)
         {
-            var request = CreateWebRequest($"http://transport.opendata.ch/v1/locations?x={coordinates.XCoordinate}&y={coordinates.YCoordinate}");
+            var request = CreateWebRequest("http://transport.opendata.ch/v1/locations?" +
+                                           $"x={coordinates.XCoordinate}&" +
+                                           $"y={coordinates.YCoordinate}");
 
             return JsonConvert.DeserializeObject<Stations>(await Get(request).ConfigureAwait(false),
                 new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
@@ -26,17 +28,24 @@ namespace SwissTransport
 
         public async Task<StationBoardRoot> GetStationBoard(string id, DateTime departureDateTime)
         {
-            var request = CreateWebRequest($"http://transport.opendata.ch/v1/stationboard?id={id}&datetime={departureDateTime:yyyy-MM-dd HH:mm}");
+            var request = CreateWebRequest("http://transport.opendata.ch/v1/stationboard?" +
+                                           $"id={id}" +
+                                           $"&datetime={departureDateTime:yyyy-MM-dd HH:mm}");
 
             return JsonConvert.DeserializeObject<StationBoardRoot>(await Get(request).ConfigureAwait(false),
                 new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
         }
 
-        public async Task<Connections> GetConnections(string fromStation, string toStation, int connectionsCount, DateTime departureDateTime)
+        public async Task<Connections> GetConnections(string fromStation, string toStation, int connectionsCount, DateTime departureDateTime, bool isArrivalTime = false)
         {
             var request =
                 CreateWebRequest(
-                    $"http://transport.opendata.ch/v1/connections?from={fromStation}&to={toStation}&limit={connectionsCount}&date={departureDateTime:yyyy-MM-dd}&time={departureDateTime:HH:mm}");
+                    "http://transport.opendata.ch/v1/connections?" +
+                    $"from={fromStation}&to={toStation}" +
+                    $"&limit={connectionsCount}" +
+                    $"&date={departureDateTime:yyyy-MM-dd}" +
+                    $"&time={departureDateTime:HH:mm}" +
+                    $"&isArrivalTime={(isArrivalTime ? "1" : "0")}");
 
             return JsonConvert.DeserializeObject<Connections>(await Get(request).ConfigureAwait(false),
                 new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });

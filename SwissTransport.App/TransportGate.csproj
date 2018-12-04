@@ -144,7 +144,6 @@
       <Name>SwissTransport</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Resource Include="Ressources\swap.png" />
   </ItemGroup>
@@ -155,10 +154,10 @@
     <Resource Include="Ressources\gps.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="bus.ico" />
+    <Resource Include="Ressources\mail.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Ressources\mail.png" />
+    <Resource Include="bus.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

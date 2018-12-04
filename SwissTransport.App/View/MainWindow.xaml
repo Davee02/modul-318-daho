@@ -8,10 +8,10 @@
                     xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                     mc:Ignorable="d"
                     Title="TransportGate" 
-                    Height="500"
-                    Width="720"
-                    MinHeight="500"
-                    MinWidth="720"
+                    Height="550"
+                    Width="750"
+                    MinHeight="550"
+                    MinWidth="750"
                     xml:lang="de-ch"
                     FocusManager.FocusedElement="{Binding ElementName=cmbStartStation}">
     <Grid Margin="5">
@@ -43,6 +43,7 @@
                                 <RowDefinition />
                                 <RowDefinition />
                                 <RowDefinition />
+                                <RowDefinition />
                             </Grid.RowDefinitions>
 
                             <Label Grid.Row="0"
@@ -57,8 +58,8 @@
                                       IsEditable="True"
                                       IsTextSearchEnabled="False"
                                       Style="{StaticResource AutoExpandComboBox}"
-                                      x:Name="cmbStartStation"
-                                      StaysOpenOnEdit="True"/>
+                                      x:Name="cmbStartStation" 
+                                      ToolTip="Startstation suchen und auswählen"/>
 
                             <Label Grid.Row="1"
                                    Grid.Column="0"
@@ -72,12 +73,14 @@
                                       IsEditable="True"
                                       IsTextSearchEnabled="False"
                                       Style="{StaticResource AutoExpandComboBox}"
-                                      x:Name="cmbStopStation"/>
+                                      x:Name="cmbStopStation"
+                                      ToolTip="Endstation suchen und auswählen"/>
 
                             <Button Grid.Row="0"
                                     Grid.RowSpan="2"
                                     Grid.Column="3"
-                                    Command="{Binding SwitchStations}">
+                                    Command="{Binding SwitchStations}"
+                                    ToolTip="Start- und Endstation tauschen">
                                 <Image Source="../Ressources/swap.png"/>
                             </Button>
 
@@ -87,10 +90,27 @@
                                    Target="{Binding ElementName=dtpConnections}"/>
                             <tools:DateTimePicker Grid.Row="2"
                                                   Grid.Column="2"
-                                                  Grid.ColumnSpan="2"
+                                                  Grid.ColumnSpan="1"
                                                   Value="{Binding SelectedDateTime, UpdateSourceTrigger=PropertyChanged}"
                                                   TextAlignment="Left"
-                                                  x:Name="dtpConnections"/>
+                                                  x:Name="dtpConnections"
+                                                  ToolTip="Datum und Uhrzeit auswählen"/>
+
+                            <Label Grid.Row="3"
+                                   Grid.Column="0"
+                                   Content="A_bfahrt / Ankunft"
+                                   Target="{Binding ElementName=scpRadioButtons}"/>
+                            <StackPanel Grid.Row="3"
+                                        Grid.Column="2"
+                                        Orientation="Horizontal"
+                                        Name="scpRadioButtons"
+                                        HorizontalAlignment="Left"
+                                        ToolTip="Abfahrts- oder Ankunftszeit">
+                                <RadioButton Content="Abfahrt"
+                                             IsChecked="{Binding IsDepartureTime}"/>
+                                <RadioButton Content="Ankunft"
+                                             Margin="20,0,0,0"/>
+                            </StackPanel>
                         </Grid>
                     </GroupBox>
 
@@ -177,7 +197,8 @@
                                       IsTextSearchEnabled="False"
                                       IsSynchronizedWithCurrentItem="False"
                                       Style="{StaticResource AutoExpandComboBox}"
-                                      x:Name="cmbStationBoardStation"/>
+                                      x:Name="cmbStationBoardStation"
+                                      ToolTip="Station suchen und auswählen"/>
 
                             <Label Grid.Row="1"
                                    Grid.Column="0"
@@ -187,7 +208,8 @@
                                                   Grid.Column="2"
                                                   Value="{Binding SelectedDateTime, UpdateSourceTrigger=PropertyChanged}"
                                                   TextAlignment="Left"
-                                                  x:Name="dtpStationBoards"/>
+                                                  x:Name="dtpStationBoards"
+                                                  ToolTip="Datum und Uhrzeit auswählen"/>
                         </Grid>
                     </GroupBox>
 
@@ -264,14 +286,16 @@
                                     x:Name="btnSearchNearStations"
                                     Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}"
                                     Height="30"
-                                    Width="30">
+                                    Width="30"
+                                    ToolTip="Aktuelle Position bestimmen">
                                 <Image Source="../Ressources/gps.png" />
                             </Button>
 
                                 <controls:ProgressRing IsActive="{Binding LocaterIsActive}"
                                                        Height="30"
                                                        Width="30"
-                                                       Margin="50,0,0,0"/>
+                                                       Margin="50,0,0,0"
+                                                       ToolTip="Aktueller Standort wird gesucht"/>
                             </StackPanel>
 
                             <Label Grid.Row="1"
@@ -287,7 +311,8 @@
                                       IsTextSearchEnabled="False"
                                       IsSynchronizedWithCurrentItem="False"
                                       Style="{StaticResource AutoExpandComboBox}"
-                                      x:Name="cmbManualStation"/>
+                                      x:Name="cmbManualStation"
+                                      ToolTip="Station suchen und auswählen um aktuellen Standort zu bestimmen"/>
                         </Grid>
                     </GroupBox>
 
@@ -364,7 +389,8 @@
                 Height="50"
                 Width="50"
                 Command="{Binding SendResultsAsEmail}"
-                CommandParameter="{Binding ElementName=tbcTabControl, Path=SelectedIndex}">
+                CommandParameter="{Binding ElementName=tbcTabControl, Path=SelectedIndex}"
+                ToolTip="E-Mail mit den gefundenen Resultaten erstellen">
             <Image Source="../Ressources/mail.png"
                    Height="30"
                    Width="30"/>

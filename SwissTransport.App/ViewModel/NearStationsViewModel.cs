@@ -106,7 +106,7 @@ namespace SwissTransport.App.ViewModel
                                 if (geoLocator.LocatorIsReady)
                                 {
                                     FoundCoordinates = geoLocator.GetLocation();
-                                    if (FoundCoordinates.XCoordinate == 0 && FoundCoordinates.YCoordinate == 0)
+                                    if (double.IsNaN(FoundCoordinates.XCoordinate) && double.IsNaN(FoundCoordinates.YCoordinate))
                                     {
                                         throw new InvalidOperationException("The returned position is invalid (0 / 0)");
                                     }

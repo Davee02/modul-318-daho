@@ -1,14 +1,12 @@
 ﻿using SwissTransport.App.Helper;
 using SwissTransport.App.Model;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
-using System.Windows;
 using System.Windows.Input;
 
 namespace SwissTransport.App.ViewModel
@@ -25,7 +23,18 @@ namespace SwissTransport.App.ViewModel
         private Station m_stopStation = new Station();
         private ObservableCollection<Connection> m_connections = new ObservableCollection<Connection>();
         private DateTime m_selectedDateTime = DateTime.Now;
+        private bool m_isDepartureTime = true;
 
+
+        public bool IsDepartureTime
+        {
+            get => m_isDepartureTime;
+            set
+            {
+                SetProperty(ref m_isDepartureTime, value);
+                UpdateConnections();
+            }
+        }
 
         public Connection SelectedConnection { get; set; }
         public DateTime SelectedDateTime
@@ -121,7 +130,7 @@ namespace SwissTransport.App.ViewModel
         {
             if (StartStation?.Id != null && StopStation?.Id != null)
             {
-                var allConnections = m_transport.GetConnections(StartStation.Id, StopStation.Id, 16, SelectedDateTime);
+                var allConnections = m_transport.GetConnections(StartStation.Id, StopStation.Id, 16, SelectedDateTime, !IsDepartureTime);
                 Connections = (await allConnections).ConnectionList.ToObservableCollection();
             }
         }
