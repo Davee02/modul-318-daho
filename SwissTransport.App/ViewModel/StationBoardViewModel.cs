@@ -75,8 +75,28 @@ namespace SwissTransport.App.ViewModel
         public StationBoardViewModel()
         {
             m_transport = new Transport();
-            ShowStation = new RelayCommand(x =>
-                Helper.Helper.OpenGoogleMapsWithCoordinates(SelectedStationBoard.Stop.Station.Coordinate));
+            ShowStation = new RelayCommand(x => OpenGoogleMapsLinkForTargetStation());
+        }
+
+        /// <summary>
+        /// Because the opentransport-API doesn't deliever the target-station (only the name), we need to query the station ourself.
+        /// After we have the station, we open google maps with the coordinates on the station.
+        /// </summary>
+        private async void OpenGoogleMapsLinkForTargetStation()
+        {
+            var targetStation = (await m_transport.GetStations(SelectedStationBoard.To))
+                .StationList
+                .FirstOrDefault();
+
+            if (targetStation != null)
+            {
+                Helper.Helper.OpenGoogleMapsWithCoordinates(targetStation.Coordinate);
+            }
+            else
+            {
+                MessageBox.Show("Das Anzeigen der Station ist aufgrund eines internen Fehlers leider nicht möglich.",
+                    "Anzeige nicht möglich", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         /// <summary>
