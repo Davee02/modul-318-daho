@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using System.Windows.Input;
+using MahApps.Metro.Controls;
 using SwissTransport.App.ViewModel;
 
 namespace SwissTransport.App.View

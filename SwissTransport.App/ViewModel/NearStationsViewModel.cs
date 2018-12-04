@@ -1,4 +1,5 @@
-﻿using SwissTransport.App.Helper;
+﻿using System;
+using SwissTransport.App.Helper;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -105,6 +106,10 @@ namespace SwissTransport.App.ViewModel
                                 if (geoLocator.LocatorIsReady)
                                 {
                                     FoundCoordinates = geoLocator.GetLocation();
+                                    if (FoundCoordinates.XCoordinate == 0 && FoundCoordinates.YCoordinate == 0)
+                                    {
+                                        throw new InvalidOperationException("The returned position is invalid (0 / 0)");
+                                    }
                                     break;
                                 }
 

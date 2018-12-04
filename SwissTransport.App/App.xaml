@@ -20,6 +20,9 @@
                     <Trigger Property="IsKeyboardFocusWithin" Value="True">
                         <Setter Property="IsDropDownOpen" Value="true" />
                     </Trigger>
+                    <Trigger Property="IsKeyboardFocused" Value="True">
+                        <Setter Property="IsDropDownOpen" Value="true" />
+                    </Trigger>
                 </Style.Triggers>
             </Style>
         </ResourceDictionary>

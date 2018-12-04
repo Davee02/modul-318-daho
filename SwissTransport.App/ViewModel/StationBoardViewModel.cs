@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 using SwissTransport.App.Model;
 
@@ -87,6 +88,13 @@ namespace SwissTransport.App.ViewModel
             if (SelectedStation?.Id != null)
             {
                 StationBoards = (await m_transport.GetStationBoard(SelectedStation.Id, SelectedDateTime)).Entries.ToObservableCollection();
+
+                if(!StationBoards.Any())
+                {
+                    MessageBox.Show(
+                        $"Ab der Station {SelectedStation} konnte am angegebenen Zeitpunkt keine Abfahrten gefunden werden.",
+                        "Keine Abfahrten gefunden", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
         }
 

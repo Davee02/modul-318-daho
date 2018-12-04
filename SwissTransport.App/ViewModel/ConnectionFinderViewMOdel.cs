@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SwissTransport.App.ViewModel
@@ -124,6 +125,13 @@ namespace SwissTransport.App.ViewModel
             {
                 var allConnections = m_transport.GetConnections(StartStation.Id, StopStation.Id, 16, SelectedDateTime);
                 Connections = (await allConnections).ConnectionList.ToObservableCollection();
+
+                if (!Connections.Any())
+                {
+                    MessageBox.Show(
+                        $"Zwischen der Station {StartStation} und {StopStation} konnte am angegebenen Zeitpunkt keine Verbindung gefunden werden.",
+                        "Keine Verbindung gefunden", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
         }
 
@@ -141,23 +149,25 @@ namespace SwissTransport.App.ViewModel
 
         /// <summary>
         /// Setting the StartStation-collection to the stations which are matching the provided filter
+        /// The ID of the stations mustn't be NULL or the same as the StopStation
         /// </summary>
         /// <param name="searchText">The filter which is applied to the stations</param>
         private async void SetStartStationsMatchingToSearchText(string searchText)
         {
             StartStations = (await m_transport.GetStations(searchText)).StationList
-                .Where(x => x.Id != null)
+                .Where(x => x.Id != null && x.Id != StopStation?.Id)
                 .ToObservableCollection();
         }
 
         /// <summary>
         /// Setting the StopStation-collection to the stations which are matching the provided filter
+        /// The ID of the stations mustn't be NULL or the same as the StopStation
         /// </summary>
         /// <param name="searchText">The filter which is applied to the stations</param>
         private async void SetStopStationsMatchingToSearchText(string searchText)
         {
             StopStations = (await m_transport.GetStations(searchText)).StationList
-                .Where(x => x.Id != null)
+                .Where(x => x.Id != null && x.Id != StartStation?.Id)
                 .ToObservableCollection();
         }
 

@@ -28,7 +28,8 @@ namespace SwissTransport
         {
             var request = CreateWebRequest($"http://transport.opendata.ch/v1/stationboard?id={id}&datetime={departureDateTime:yyyy-MM-dd HH:mm}");
 
-            return JsonConvert.DeserializeObject<StationBoardRoot>(await Get(request).ConfigureAwait(false));
+            return JsonConvert.DeserializeObject<StationBoardRoot>(await Get(request).ConfigureAwait(false),
+                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
         }
 
         public async Task<Connections> GetConnections(string fromStation, string toStation, int connectionsCount, DateTime departureDateTime)
