@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
+using System.Net;
 using System.Windows;
 
 namespace SwissTransport.App.Helper
@@ -24,7 +26,8 @@ namespace SwissTransport.App.Helper
         /// <returns>URL, which can be browsed in an internet browser</returns>
         public static string GetGoogleMapsLinkForCoordinates(Coordinate coordinates)
         {
-            return $"http://www.google.com/maps/place/{coordinates.XCoordinate},{coordinates.YCoordinate}/data=!3m1!1e3";
+            return $"http://www.google.com/maps/place/{coordinates.XCoordinate.ToString(CultureInfo.CreateSpecificCulture("de-ch"))}" +
+                   $",{coordinates.YCoordinate.ToString(CultureInfo.CreateSpecificCulture("de-ch"))}/data=!3m1!1e3";
         }
 
         /// <summary>
@@ -42,6 +45,26 @@ namespace SwissTransport.App.Helper
                 MessageBox.Show(
                     "Die ausgewählte Station kann leider nicht angezeigt werden, da dafür keine Koordinaten gespeichert sind.",
                     "Station kann nicht angezeigt werden.", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        /// <summary>
+        /// Tries to connect to "http://www.google.com" for checking the internet-availability
+        /// </summary>
+        /// <returns>Whether a connection to the internet is availale</returns>
+        public static bool IsInternetConnectionAvailable()
+        {
+            try
+            {
+                using (var client = new WebClient())
+                using (var stream = client.OpenRead("http://www.google.com"))
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
             }
         }
     }

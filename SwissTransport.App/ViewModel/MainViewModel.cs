@@ -15,6 +15,14 @@ namespace SwissTransport.App.ViewModel
 
         public MainViewModel()
         {
+            if (!Helper.Helper.IsInternetConnectionAvailable())
+            {
+                MessageBox.Show(
+                    "Ihr Gerät ist nicht mit dem Internet verbunden und daher kann TransportGate nicht korrekt funktionieren. Das Programm wird daher wieder geschlossen.",
+                    "Keine aktive Internetverbndung", MessageBoxButton.OK, MessageBoxImage.Error);
+                Application.Current.Shutdown();
+            }
+
             TabChildren.Add(new ConnectionFinderViewModel());
             TabChildren.Add(new StationBoardViewModel());
             TabChildren.Add(new NearStationsViewModel());
