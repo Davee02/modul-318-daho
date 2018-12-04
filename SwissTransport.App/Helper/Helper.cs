@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Security.Permissions;
 using System.Windows;
 
 namespace SwissTransport.App.Helper
@@ -36,7 +35,7 @@ namespace SwissTransport.App.Helper
         {
             if (coordinates != null)
             {
-                Process.Start(SwissTransport.App.Helper.Helper.GetGoogleMapsLinkForCoordinates(coordinates));
+                Process.Start(GetGoogleMapsLinkForCoordinates(coordinates));
             }
             else
             {

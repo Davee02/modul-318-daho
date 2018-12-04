@@ -1,9 +1,8 @@
-﻿using System;
+﻿using SwissTransport.App.Model;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Navigation;
-using SwissTransport.App.Model;
 
 namespace SwissTransport.App.ViewModel
 {
@@ -20,7 +19,7 @@ namespace SwissTransport.App.ViewModel
             TabChildren.Add(new StationBoardViewModel());
             TabChildren.Add(new NearStationsViewModel());
 
-            SendResultsAsEmail = new RelayCommand(x => SendEmailWithSearchResults(x));
+            SendResultsAsEmail = new RelayCommand(SendEmailWithSearchResults);
         }
 
         private void SendEmailWithSearchResults(object selectedTabItemIndex)

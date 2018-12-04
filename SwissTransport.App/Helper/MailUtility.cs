@@ -7,7 +7,6 @@ namespace SwissTransport.App.Helper
 {
     public static class MailUtility
     {
-        //Extension method for MailMessage to save to a file on disk
         /// <summary>
         /// This extension-method saves the provided MailMessage in a file to the disk.
         /// The File can later be opened in the default mailprogram.
@@ -23,8 +22,9 @@ namespace SwissTransport.App.Helper
                 if (addUnsentHeader)
                 {
                     var binaryWriter = new BinaryWriter(filestream);
-                    //Write the Unsent header to the file so the mail client knows this mail must be presented in "New message" mode
-                    binaryWriter.Write(System.Text.Encoding.UTF8.GetBytes("X-Unsent: 1" + Environment.NewLine));
+
+                        //Write the Unsent header to the file so the mail client knows this mail must be presented in "New message" mode
+                        binaryWriter.Write(System.Text.Encoding.UTF8.GetBytes("X-Unsent: 1" + Environment.NewLine));
                 }
 
                 var assembly = typeof(SmtpClient).Assembly;

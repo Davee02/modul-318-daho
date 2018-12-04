@@ -37,9 +37,7 @@ namespace SwissTransport.App.ViewModel
                 if (!string.Equals(value, m_searchText))
                 {
 
-                    Stations = m_transport.GetStations(value).Result.StationList
-                        .Where(x => x.Id != null)
-                        .ToObservableCollection();
+                    SetStationsMatchingToSearchText(value);
 
                     SetProperty(ref m_searchText, value);
                 }
@@ -57,7 +55,7 @@ namespace SwissTransport.App.ViewModel
             set
             {
                 m_selectedManualStation = value;
-                FoundCoordinates = m_selectedManualStation.Coordinate;
+                FoundCoordinates = m_selectedManualStation?.Coordinate;
                 UpdateStations();
             }
         }
@@ -140,6 +138,17 @@ namespace SwissTransport.App.ViewModel
         }
 
         /// <summary>
+        /// Setting the Station-collection to the stations which are matching the provided filter
+        /// </summary>
+        /// <param name="searchText">The filter which is applied to the stations</param>
+        private async void SetStationsMatchingToSearchText(string searchText)
+        {
+            Stations = (await m_transport.GetStations(searchText)).StationList
+                .Where(x => x.Id != null)
+                .ToObservableCollection();
+        }
+
+        /// <summary>
         /// Set the collection, which holds all the station-items, new
         /// </summary>
         private async void UpdateStations()
@@ -163,7 +172,7 @@ namespace SwissTransport.App.ViewModel
         public void SendResultsAsMail()
         {
             var mailContentBuilder = new StringBuilder();
-            mailContentBuilder.AppendLine("Hallo!");
+            mailContentBuilder.AppendLine("Hallo!</br>");
             mailContentBuilder.AppendLine(
                 $"Sieh dir an, welche Stationen ich in der Nähe der Koordinaten {FoundCoordinates} gefunden habe:\n");
             mailContentBuilder.Append("<table border='1' style='border-collapse:collapse' cellpadding='5'");

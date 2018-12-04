@@ -1,6 +1,7 @@
 ﻿using SwissTransport.App.Helper;
 using SwissTransport.App.Model;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -85,9 +86,7 @@ namespace SwissTransport.App.ViewModel
             {
                 if (!string.Equals(value, m_startSearchText))
                 {
-                    StartStations = m_transport.GetStations(value).Result.StationList
-                        .Where(x => x.Id != null)
-                        .ToObservableCollection();
+                    SetStartStationsMatchingToSearchText(value);
 
                     SetProperty(ref m_startSearchText, value);
                 }
@@ -101,9 +100,7 @@ namespace SwissTransport.App.ViewModel
             {
                 if (!string.Equals(value, m_stopSearchText))
                 {
-                    StopStations = m_transport.GetStations(value).Result.StationList
-                        .Where(x => x.Id != null)
-                        .ToObservableCollection();
+                    SetStopStationsMatchingToSearchText(value);
 
                     SetProperty(ref m_stopSearchText, value);
                 }
@@ -142,10 +139,32 @@ namespace SwissTransport.App.ViewModel
             StopSearchText = tmp;
         }
 
+        /// <summary>
+        /// Setting the StartStation-collection to the stations which are matching the provided filter
+        /// </summary>
+        /// <param name="searchText">The filter which is applied to the stations</param>
+        private async void SetStartStationsMatchingToSearchText(string searchText)
+        {
+            StartStations = (await m_transport.GetStations(searchText)).StationList
+                .Where(x => x.Id != null)
+                .ToObservableCollection();
+        }
+
+        /// <summary>
+        /// Setting the StopStation-collection to the stations which are matching the provided filter
+        /// </summary>
+        /// <param name="searchText">The filter which is applied to the stations</param>
+        private async void SetStopStationsMatchingToSearchText(string searchText)
+        {
+            StopStations = (await m_transport.GetStations(searchText)).StationList
+                .Where(x => x.Id != null)
+                .ToObservableCollection();
+        }
+
         public void SendResultsAsMail()
         {
             var mailContentBuilder = new StringBuilder();
-            mailContentBuilder.AppendLine("Hallo!");
+            mailContentBuilder.AppendLine("Hallo!</br>");
             mailContentBuilder.AppendLine(
                 $"Sieh dir an, welche Verbindungen ich von {StartStation} nach {StopStation} am {SelectedDateTime:D} um {SelectedDateTime:t} gefunden habe:\n");
             mailContentBuilder.Append("<table border='1' style='border-collapse:collapse' cellpadding='5'");
