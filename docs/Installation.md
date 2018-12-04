@@ -4,7 +4,7 @@
 
 1. Das folgende Git-Repository auf den lokalen Rechner clonen: https://github.com/Davee02/modul-318-daho
 
-2. Relativ zum Root-Verzeichnis des geclonten Repos in den folgenden Ordner navigieren: «/SwissTransport.Installer/SwissTransport.Installer-SetupFiles/» navigieren
+2. Relativ zum Root-Verzeichnis des geclonten Repos in den folgenden Ordner navigieren: «src/SwissTransport.Installer/SwissTransport.Installer-SetupFiles/» navigieren
 
 3. Die MSI-Datei doppelklicken und alle vom Wizard abgefragten Information eingeben oder validieren
 
