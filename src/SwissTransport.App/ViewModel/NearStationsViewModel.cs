@@ -89,7 +89,7 @@ namespace SwissTransport.App.ViewModel
         private async void GetCurrentPosition()
         {
             LocaterIsActive = true;
-            bool success = true;
+            bool success = false;
             await Task.Run(async () =>
                 {
                     try
@@ -106,10 +106,7 @@ namespace SwissTransport.App.ViewModel
                                 if (geoLocator.LocatorIsReady)
                                 {
                                     FoundCoordinates = geoLocator.GetLocation();
-                                    if (double.IsNaN(FoundCoordinates.XCoordinate) && double.IsNaN(FoundCoordinates.YCoordinate))
-                                    {
-                                        throw new InvalidOperationException("The returned position is invalid (0 / 0)");
-                                    }
+                                    success = true;
                                     break;
                                 }
 
@@ -122,7 +119,6 @@ namespace SwissTransport.App.ViewModel
                             MessageBox.Show(
                                 "Die Position konnte leider nicht ermittelt werden. Bitte aktivieren Sie die Positionsdienste in Ihren Windows-Einstellungen und versuchen Sie es in ein paar Sekunden erneut.",
                                 "Positionierung fehlgeschlagen", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            success = false;
                             return;
                         }
                     }
@@ -131,7 +127,6 @@ namespace SwissTransport.App.ViewModel
                         MessageBox.Show(
                             "Die Position konnte leider nicht ermittelt werden. Bitte aktivieren Sie die Positionsdienste in Ihren Windows-Einstellungen und versuchen Sie es in ein paar Sekunden erneut.",
                             "Positionierung fehlgeschlagen", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        success = false;
                         return;
                     }
                 }
@@ -158,6 +153,9 @@ namespace SwissTransport.App.ViewModel
         /// </summary>
         private async void UpdateStations()
         {
+            if(FoundCoordinates == null)
+                return;
+
             var stations = await m_transport.GetStations(FoundCoordinates);
             if (stations == null || stations.StationList?.Count == 0)
             {

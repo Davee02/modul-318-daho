@@ -126,7 +126,8 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock>
-                                                    <Button Command="{Binding DataContext.ShowStartStation, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}">
+                                                    <Button Command="{Binding DataContext.ShowStartStation, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
+                                                            ToolTip="Station auf Google-Maps anschauen">
                                                         <Image Source="../Ressources/map.png" Height="16" Width="16"/>
                                                     </Button>
                                                     <Run Text="{Binding Path=From.Station.Name}"/>
@@ -142,7 +143,8 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock>
-                                                    <Button Command="{Binding DataContext.ShowStopStation, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}">
+                                                    <Button Command="{Binding DataContext.ShowStopStation, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
+                                                            ToolTip="Station auf Google-Maps anschauen">
                                                         <Image Source="../Ressources/map.png" Height="16" Width="16"/>
                                                     </Button>
                                                     <Run Text="{Binding Path=To.Station.Name}"/>
@@ -225,7 +227,8 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock>
-                                                    <Button Command="{Binding DataContext.ShowStation, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}">
+                                                    <Button Command="{Binding DataContext.ShowStation, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
+                                                            ToolTip="Station auf Google-Maps anschauen">
                                                         <Image Source="../Ressources/map.png" Height="16" Width="16"/>
                                                     </Button>
                                                     <Run Text="{Binding To}"/>
@@ -369,7 +372,8 @@
                                     <GridViewColumn Header="Position anzeigen">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Button Command="{Binding DataContext.ShowStation, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}">
+                                                <Button Command="{Binding DataContext.ShowStation, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
+                                                        ToolTip="Station auf Google-Maps anschauen">
                                                     <Image Source="../Ressources/map.png" Height="16" Width="16"/>
                                                 </Button>
                                             </DataTemplate>

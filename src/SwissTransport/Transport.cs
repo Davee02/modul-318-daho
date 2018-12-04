@@ -18,12 +18,19 @@ namespace SwissTransport
 
         public async Task<Stations> GetStations(Coordinate coordinates)
         {
-            var request = CreateWebRequest("http://transport.opendata.ch/v1/locations?" +
-                                           $"x={coordinates.XCoordinate}&" +
-                                           $"y={coordinates.YCoordinate}");
+            if (coordinates != null)
+            {
+                var request = CreateWebRequest("http://transport.opendata.ch/v1/locations?" +
+                                               $"x={coordinates.XCoordinate}&" +
+                                               $"y={coordinates.YCoordinate}");
 
-            return JsonConvert.DeserializeObject<Stations>(await Get(request).ConfigureAwait(false),
-                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+                return JsonConvert.DeserializeObject<Stations>(await Get(request).ConfigureAwait(false),
+                    new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore});
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public async Task<StationBoardRoot> GetStationBoard(string id, DateTime departureDateTime)

@@ -5,19 +5,19 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_ControlzEx.dll" Value="..\packages\ControlzEx.3.0.2.4\lib\net462"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_MahApps.Metro.dll" Value="..\packages\MahApps.Metro.1.6.5\lib\net47"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Newtonsoft.Json.dll" Value="..\packages\Newtonsoft.Json.8.0.2\lib\net45"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_SwissTransport.dll" Value="..\src\SwissTransport\bin\Debug"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.Windows.Interactivity.dll" Value="..\packages\ControlzEx.3.0.2.4\lib\net462"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_TransportGate.exe" Value="..\SwissTransport.App\bin\Debug"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_TransportGate.exe.config" Value="..\SwissTransport.App\bin\Debug"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Xceed.Wpf.AvalonDock.Themes.Aero.dll" Value="..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Xceed.Wpf.AvalonDock.Themes.Metro.dll" Value="..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Xceed.Wpf.AvalonDock.Themes.VS2010.dll" Value="..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Xceed.Wpf.AvalonDock.dll" Value="..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Xceed.Wpf.DataGrid.dll" Value="..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Xceed.Wpf.Toolkit.dll" Value="..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_ControlzEx.dll" Value="..\SwissTransport.App\bin\Release"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_MahApps.Metro.dll" Value="..\SwissTransport.App\bin\Release"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Newtonsoft.Json.dll" Value="..\..\packages\Newtonsoft.Json.8.0.2\lib\net45"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_SwissTransport.dll" Value="..\SwissTransport\bin\Release"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.Windows.Interactivity.dll" Value="..\SwissTransport.App\bin\Release"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_TransportGate.exe" Value="..\SwissTransport.App\bin\Release"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_TransportGate.exe.config" Value="..\SwissTransport.App\bin\Release"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Xceed.Wpf.AvalonDock.Themes.Aero.dll" Value="..\SwissTransport.App\bin\Release"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Xceed.Wpf.AvalonDock.Themes.Metro.dll" Value="..\SwissTransport.App\bin\Release"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Xceed.Wpf.AvalonDock.Themes.VS2010.dll" Value="..\SwissTransport.App\bin\Release"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Xceed.Wpf.AvalonDock.dll" Value="..\SwissTransport.App\bin\Release"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Xceed.Wpf.DataGrid.dll" Value="..\SwissTransport.App\bin\Release"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_Xceed.Wpf.Toolkit.dll" Value="..\SwissTransport.App\bin\Release"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_ControlzEx.dll" Value="ControlzEx.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_MahApps.Metro.dll" Value="MahApps.Metro.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Newtonsoft.Json.dll" Value="Newtonsoft.Json.dll"/>
