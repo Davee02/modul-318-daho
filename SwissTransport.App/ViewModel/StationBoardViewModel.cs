@@ -63,7 +63,6 @@ namespace SwissTransport.App.ViewModel
             {
                 if (!string.Equals(value, m_searchText))
                 {
-
                     SetStationsMatchingToSearchText(value);
 
                     SetProperty(ref m_searchText, value);

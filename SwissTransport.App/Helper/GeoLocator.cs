@@ -28,7 +28,7 @@ namespace SwissTransport.App.Helper
         /// <returns>The Success of the start</returns>
         public bool StartLocator()
         {
-            return m_watcher.TryStart(false, TimeSpan.FromSeconds(3));
+            return m_watcher.TryStart(true, TimeSpan.FromSeconds(3));
         }
 
         /// <summary>

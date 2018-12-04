@@ -169,7 +169,7 @@ namespace SwissTransport.App.ViewModel
             else
             {
                 NearStations = stations.StationList
-                    .Where(x => x.Id != null)
+                    .Where(x => x.Id != null && x.Id != SelectedManualStation.Id)
                     .ToObservableCollection();
             }
         }

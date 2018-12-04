@@ -87,9 +87,8 @@ namespace SwissTransport.App.ViewModel
             {
                 if (!string.Equals(value, m_startSearchText))
                 {
+                    m_startSearchText = value;
                     SetStartStationsMatchingToSearchText(value);
-
-                    SetProperty(ref m_startSearchText, value);
                 }
             }
         }
@@ -101,9 +100,8 @@ namespace SwissTransport.App.ViewModel
             {
                 if (!string.Equals(value, m_stopSearchText))
                 {
+                    m_stopSearchText = value;
                     SetStopStationsMatchingToSearchText(value);
-
-                    SetProperty(ref m_stopSearchText, value);
                 }
             }
         }
@@ -125,13 +123,6 @@ namespace SwissTransport.App.ViewModel
             {
                 var allConnections = m_transport.GetConnections(StartStation.Id, StopStation.Id, 16, SelectedDateTime);
                 Connections = (await allConnections).ConnectionList.ToObservableCollection();
-
-                if (!Connections.Any())
-                {
-                    MessageBox.Show(
-                        $"Zwischen der Station {StartStation} und {StopStation} konnte am angegebenen Zeitpunkt keine Verbindung gefunden werden.",
-                        "Keine Verbindung gefunden", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
             }
         }
 
@@ -142,9 +133,8 @@ namespace SwissTransport.App.ViewModel
         {
             (StartStation, StopStation) = (StopStation, StartStation);
 
-            var tmp = StartSearchText;
-            StartSearchText = StopSearchText;
-            StopSearchText = tmp;
+            StartSearchText = StartStation.ToString();
+            StopSearchText = StopStation.ToString();
         }
 
         /// <summary>
